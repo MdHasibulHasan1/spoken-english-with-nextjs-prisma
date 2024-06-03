@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Ubuntu } from "next/font/google";
-import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 const ubuntu = Ubuntu({
@@ -19,11 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={ubuntu.className}>
-        {/* <Navbar /> */}
-        {children}
-      </body>
-    </html>
+    <div>
+      <Navbar />
+      {children}
+    </div>
   );
 }
