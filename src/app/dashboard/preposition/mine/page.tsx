@@ -1,38 +1,37 @@
 import SectionTitle from "@/components/SectionTitle";
 import { prisma } from "@/lib/db/prisma";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import toast from "react-hot-toast";
+import { MdDeleteForever } from "react-icons/md";
 
-async function MyConjunctions() {
-  const conjunctions = await prisma.conjunction.findMany({
+async function MyPrepositions() {
+  const prepositions = await prisma.prepositions.findMany({
     where: {
       bloggerEmail: "hasib7143@gmail.com", // Replace with the actual unique ID value
     },
   });
+
   return (
     <div className="container mx-auto p-4">
-      <SectionTitle title="My Conjunctions" />
+      <SectionTitle title="My Prepositions" />
 
-      {conjunctions.map((conjunction) => (
-        <div
-          key={conjunction.id}
-          className="p-4 mb-4 bg-white shadow-md rounded-md"
-        >
+      {prepositions.map((p) => (
+        <div key={p.id} className="p-4 mb-4 bg-white shadow-md rounded-md">
           <p>
-            <strong>Conjunction:</strong> {conjunction.conjunction}
+            <strong>Title:</strong> {p.title}
           </p>
           <p>
-            <strong>Explanation:</strong> {conjunction.explanation}
-          </p>
-          <p>
-            <strong>Blogger Email:</strong> {conjunction.bloggerEmail}
+            <strong>Created At:</strong>{" "}
+            {new Date(p?.createdAt).toLocaleString()}
           </p>
           <p>
             <strong>Updated At:</strong>{" "}
-            {new Date(conjunction.updatedAt).toLocaleString()}
+            {new Date(p?.updatedAt).toLocaleString()}
           </p>
-          <Link href={`/dashboard/conjunctions/update/${conjunction?.id}`}>
+          <Link href={`/dashboard/preposition/update/${p?.id}`}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
               Update Data
             </button>
@@ -43,4 +42,4 @@ async function MyConjunctions() {
   );
 }
 
-export default MyConjunctions;
+export default MyPrepositions;

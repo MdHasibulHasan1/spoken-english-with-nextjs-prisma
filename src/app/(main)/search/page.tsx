@@ -174,7 +174,7 @@ export default function Search() {
           {!loading && posts.length === 0 && (
             <p className="text-xl text-gray-500">No posts found.</p>
           )}
-          {!loading &&
+          {/*    {!loading &&
             posts.map((post) => <PostCard key={post.id} post={post} />)}
           {showMore && (
             <button
@@ -183,7 +183,7 @@ export default function Search() {
             >
               Show More
             </button>
-          )}
+          )} */}
         </div>
       </div>
     </div>

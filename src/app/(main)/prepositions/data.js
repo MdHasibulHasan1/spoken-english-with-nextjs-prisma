@@ -637,9 +637,8 @@ const prepositionsData = [
     title: "Beside এবং Besides এর মধ্যে পার্থক্য",
     usages: [
       {
-        description: "Beside",
+        description: "পাশে বোঝাতে ব্যবহৃত হয়।",
         examples: [
-          "পাশে বোঝাতে ব্যবহৃত হয়। (Used to express next to.)",
           "She sat beside her friend. (সে তার বন্ধুর পাশে বসেছিল।)",
           "The lamp is beside the bed. (ল্যাম্পটি বিছানার পাশে আছে।)",
           "He stood beside his car. (সে তার গাড়ির পাশে দাঁড়িয়েছিল।)",
@@ -648,9 +647,8 @@ const prepositionsData = [
         ],
       },
       {
-        description: "Besides",
+        description: "অতিরিক্ত বোঝাতে ব্যবহৃত হয়।",
         examples: [
-          "অতিরিক্ত বোঝাতে ব্যবহৃত হয়। (Used to express in addition to.)",
           "Besides studying, she also works part-time. (পড়াশোনার পাশাপাশি, সে পার্ট-টাইম কাজও করে।)",
           "He likes soccer besides basketball. (বাস্কেটবলের পাশাপাশি, সে ফুটবলও পছন্দ করে।)",
           "Besides the main course, they served dessert. (প্রধান খাবারের পাশাপাশি, তারা ডেজার্টও পরিবেশন করেছিল।)",

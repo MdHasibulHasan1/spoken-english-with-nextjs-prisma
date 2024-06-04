@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Ubuntu } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
+import Toaster from "@/components/Toaster";
 const inter = Inter({ subsets: ["latin"] });
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className={ubuntu.className}>
         {/* <Navbar /> */}
         {children}
+        <Toaster />
       </body>
     </html>
   );

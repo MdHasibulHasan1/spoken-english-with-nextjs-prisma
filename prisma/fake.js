@@ -8,21 +8,6 @@ datasource db {
 }
 
 
-type PrepositionsUsages {
-  description String
-  examples    String[]
-}
-
-model prepositions {
-  id          String               @id @default(auto()) @map("_id") @db.ObjectId
-  expressions String[]
-  title       String
-  bloggerEmail String   @default("hasib7143@gmail.com")
-  usages      PrepositionsUsages[]
-  createdAt DateTime? @db.Date
-  updatedAt     DateTime  @updatedAt @default(now())
-}
-
 
 type Examples {
   bangla  String
@@ -41,8 +26,7 @@ model Chapter {
   // slug      Json?    @unique
   
   // title     String   @unique
-  title     String?
-  statue String? @default("pending")
+  title     String?  
   createdAt DateTime? @db.Date @default(now())
   updatedAt     DateTime  @updatedAt @default(now())
   @@map("chapters")
@@ -93,6 +77,8 @@ model User {
 
 
 
+
+
 model Conjunction {
   id          String                 @id @default(auto()) @map("_id") @db.ObjectId
   conjunction String
@@ -105,3 +91,33 @@ model Conjunction {
 }
 
 
+// ........................
+
+
+
+
+
+
+type PrepositionsExpressions {
+  examples   String[]
+  expression String
+  meaning    String
+}
+
+type PrepositionsUsages {
+  description String
+  examples    String[]
+}
+
+
+
+model prepositions {
+  id           String               @id @default(auto()) @map("_id") @db.ObjectId
+  bloggerEmail String
+  createdAt    DateTime             @db.Date
+  /// Multiple data types found: Array(String): 87.5%, Array(PrepositionsExpressions): 12.5% out of 8 sampled entries
+  expressions  Json?
+  title        String
+  updatedAt    DateTime             @db.Date
+  usages       PrepositionsUsages[]
+}

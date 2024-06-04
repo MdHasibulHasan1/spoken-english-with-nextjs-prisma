@@ -1,7 +1,11 @@
 "use client";
+
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { toast } from "react-hot-toast";
-import { MdAddCircleOutline } from "react-icons/md";
+import { IoMdAdd } from "react-icons/io";
+import { MdAddCircleOutline, MdDeleteForever } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 interface PrepositionsUsages {
@@ -15,14 +19,21 @@ interface FormData {
   usages: PrepositionsUsages[];
 }
 
-const PrepositionsForm: React.FC = () => {
+const PrepositionsForm: React.FC = ({
+  expressions,
+  title,
+  usages,
+  id,
+}: FormData) => {
   const [formData, setFormData] = useState<FormData>({
-    expressions: [""],
-    title: "",
-    usages: [{ description: "", examples: [""] }],
+    expressions,
+    title,
+    usages,
+    id,
   });
-  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const router = useRouter();
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement>,
     index: number,
@@ -84,40 +95,45 @@ const PrepositionsForm: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const toastId = toast.loading("Loading...");
-    setIsLoading(true);
     try {
-      const toastId = toast.loading("Loading...");
-      const res = await fetch("/api/preposition", {
-        method: "POST",
+      const res = await fetch(`/api/preposition/${id}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      /*  if (!res.ok) {
+      /*   if (!res.ok) {
         throw new Error("Failed to save preposition");
-      }
- */
+      } */
+
       const data = await res.json();
       if (data.success) {
-        toast.success(data.message);
+        toast.dismiss(toastId);
+        toast.success("Your Preposition Updated successfully");
         setMessage(data.message);
-        setIsLoading(false);
       } else {
-        toast.error(data.message);
+        toast.dismiss(toastId);
+        toast.success("Your Preposition is not Updated successfully");
         setMessage(data.message);
-        setIsLoading(false);
       }
-      toast.success("Your Preposition Updated successfully");
       console.log("Success:", data);
     } catch (error) {
       console.error("Error:", error);
-      setIsLoading(false);
       toast.dismiss(toastId);
       toast.error(error.message || "Something went wrong. update failed.");
-      // setMessage(error?.message || error);
     }
   };
-
+  const deletePreposition = async () => {
+    try {
+      const res = await axios.delete(`/api/preposition/${id}`);
+      console.log(res);
+      toast.success("Preposition deleted successfully.");
+      router.push("/dashboard/preposition/mine");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
   return (
     <form
       onSubmit={handleSubmit}
@@ -230,13 +246,19 @@ const PrepositionsForm: React.FC = () => {
           Add Usage
         </button>
       </div>
+
+      <div
+        onClick={deletePreposition}
+        className="bg-red-500 text-center flex justify-center hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        <RiDeleteBinLine color="white" />
+      </div>
       <p className="text-red-500 p-2 rounded-md">{message}</p>
       <button
         type="submit"
-        disabled={isLoading}
-        className="bg-green-500 w-full disabled:bg-green-200 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="bg-green-500 w-full hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
-        {isLoading ? "...Loading" : " Submit"}
+        Submit
       </button>
     </form>
   );

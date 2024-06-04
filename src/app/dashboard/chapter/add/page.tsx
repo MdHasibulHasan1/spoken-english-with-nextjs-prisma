@@ -97,7 +97,7 @@ const CreatePost = () => {
         return;
       }
       setPublishError(null);
-      router.push(`/post/${data.slug}`);
+      router.push(`/chapter/${data.slug}`);
     } catch {
       setPublishError("Something went wrong");
     }

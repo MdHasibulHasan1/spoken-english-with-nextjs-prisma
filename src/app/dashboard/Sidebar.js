@@ -26,6 +26,14 @@ const navData = [
     path: "/dashboard/conjunctions/mine",
     title: "My Conjunctions",
   },
+  {
+    path: "/dashboard/chapter/add",
+    title: "Add a Chapter",
+  },
+  {
+    path: "/dashboard/chapter/mine",
+    title: "My Chapters",
+  },
 ];
 
 const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {

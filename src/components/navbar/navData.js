@@ -17,6 +17,10 @@ const commonNavData = [
     title: "Spoken Rules",
   },
   {
+    path: "/chapter",
+    title: "Chapters",
+  },
+  {
     path: "/subject-verb-agreement",
     title: "Subject & verb agreement",
   },

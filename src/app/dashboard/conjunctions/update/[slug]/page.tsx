@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db/prisma";
 import React from "react";
+import ConjunctionEditForm from "../ConjunctionEditForm";
 
 async function UpdateConjunction({ params }: { params: { slug: string } }) {
   const conjunctionId = parseInt(params.slug, 10);
@@ -19,7 +20,11 @@ async function UpdateConjunction({ params }: { params: { slug: string } }) {
       return <div>conjunction id not fount</div>;
     }
 
-    return <div>{/* <Edit {...conjunction} /> */}</div>;
+    return (
+      <div>
+        <ConjunctionEditForm {...conjunction} />
+      </div>
+    );
   } catch (error) {
     console.log("Error", error);
     return <div>Error fetching conjunction</div>;
