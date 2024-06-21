@@ -1,9 +1,9 @@
 import SectionTitle from "@/components/SectionTitle";
 import PrepositionsForm from "./PrepositionsForm";
 
-const Home: React.FC = () => {
+const AddPreposition: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div className="min-h-screen w-full  bg-gray-100">
       <div>
         <SectionTitle title="Add Prepositions" />
         <PrepositionsForm />
@@ -12,4 +12,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default AddPreposition;

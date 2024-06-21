@@ -7,15 +7,12 @@ const prisma = new PrismaClient();
 export async function POST(req: Request) {
   try {
     const { conjunction, explanation, examples } = await req.json();
-    const emptyExamples = examples.filter(
-      (example: any) => example?.english === "" && example?.bangla === ""
-    );
+
     // Validation: Check if any of the fields are empty
     if (
       !conjunction ||
       !explanation ||
       !Array.isArray(examples) ||
-      emptyExamples ||
       examples.length === 0
     ) {
       const errorResponse: ApiResponse = {

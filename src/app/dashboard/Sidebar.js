@@ -1,133 +1,189 @@
+"use client";
+import { useState } from "react";
 import NavLink from "@/components/navbar/NavLink";
+import { GoHome, GoPerson, GoPlus, GoListUnordered } from "react-icons/go";
+import { MdDashboard } from "react-icons/md";
 
-import { GoHome } from "react-icons/go";
 const navData = [
   {
     path: "/dashboard",
-    title: "Home",
+    title: "Dashboard",
+    icon: <MdDashboard />,
   },
   {
     path: "/dashboard/manage-users",
     title: "Manage Users",
+    icon: <GoPerson />,
   },
   {
     path: "/dashboard/preposition/add",
     title: "Add Preposition",
+    icon: <GoPlus />,
   },
   {
     path: "/dashboard/preposition/mine",
     title: "My Prepositions",
+    icon: <GoListUnordered />,
   },
   {
     path: "/dashboard/conjunctions/add",
     title: "Add Conjunction",
+    icon: <GoPlus />,
   },
   {
     path: "/dashboard/conjunctions/mine",
     title: "My Conjunctions",
+    icon: <GoListUnordered />,
   },
   {
     path: "/dashboard/chapter/add",
     title: "Add a Chapter",
+    icon: <GoPlus />,
   },
   {
     path: "/dashboard/chapter/mine",
     title: "My Chapters",
+    icon: <GoListUnordered />,
   },
 ];
 
-const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
+const Sidebar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
   return (
-    <div>
-      {/* className={`${!isMenuOpen && "hidden"}`} */}
-      <nav className="border-b border-gray-200 fixed z-30 w-full">
-        <div className="flex items-center justify-start lg:hidden">
-          <div className="absolute z-10 top-0 left-0 w-full">
-            <div className="px-5 border rounded shadow-sm">
-              <div className="flex items-center justify-between relative">
-                <button
-                  className="px-4 py-2 rounded-xl absolute transition top-0 right-0 duration-200 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                >
-                  {isMenuOpen ? (
-                    <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
-                      <path
-                        fill="currentColor"
-                        d="M19.7,4.3c-0.4-0.4-1-0.4-1.4,0L12,10.6L5.7,4.3c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4l6.3,6.3l-6.3,6.3 c-0.4,0.4-0.4,1,0,1.4C4.5,19.9,4.7,20,5,20s0.5-0.1,0.7-0.3l6.3-6.3l6.3,6.3c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3 c0.4-0.4,0.4-1,0-1.4L13.4,12l6.3-6.3C20.1,5.3,20.1,4.7,19.7,4.3z"
-                      />
-                    </svg>
-                  ) : (
-                    <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
-                      <path
-                        fill="currentColor"
-                        d="M23,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,13,23,13z"
-                      />
-                      <path
-                        fill="currentColor"
-                        d="M23,6H1C0.4,6,0,5.6,0,5s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,6,23,6z"
-                      />
-                      <path
-                        fill="currentColor"
-                        d="M23,20H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,20,23,20z"
-                      />
-                    </svg>
-                  )}
-                </button>
-              </div>
-              {isMenuOpen && (
-                <nav>
-                  <ul className="py-6 px-4  bg-gray-50 border border-gray-500 lg:hidden ">
-                    {/* Navigation links */}
-                    {navData.map(({ path, title }) => (
-                      <li
-                        key={path}
-                        className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-lg py-3 rounded-lg shadow-md shadow-gray-500/20 hover:shadow-lg hover:shadow-gray-500/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize"
-                      >
-                        <NavLink
-                          // onClick={() => setNavToggle(false)}
-                          href={path}
-                          activeClassName="text-blue-500"
-                          exact={path === "/dashboard"}
-                        >
-                          {title}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-              )}
-            </div>
-          </div>
+    <div className="flex h-screen bg-gray-100">
+      {/* Top Navigation for Mobile */}
+      <nav className="bg-white shadow-md fixed w-full z-30 lg:hidden">
+        <div className="flex items-center justify-between p-4">
+          <div className="text-xl font-semibold">My Dashboard</div>
+          <button
+            className="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+            )}
+          </button>
         </div>
-      </nav>
-      <div className="flex overflow-hidden pt-16">
-        <aside className="bg-slate-100 border border-slate-400 rounded-ee-lg rounded-tr-lg fixed hidden z-20 h-full top-0 left-0 lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75">
-          <div className="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 pt-0">
-            <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-              <div className="flex-1 px-3 divide-y space-y-1">
-                <ul className="space-y-2 pb-2 ">
-                  {navData.map(({ path, title }) => (
-                    <li
-                      key={path}
-                      className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-lg py-3 rounded-lg shadow-md shadow-gray-500/20 hover:shadow-lg hover:shadow-gray-500/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize "
-                    >
-                      <NavLink
-                        // onClick={() => setNavToggle(false)}
-                        className="pl-2"
-                        href={path}
-                        activeClassName="text-blue-500  border-l-2 border-blue-600"
-                        exact={path === "/dashboard"}
-                      >
-                        {title}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+        {isMenuOpen && (
+          <div className="px-4 pb-4 lg:hidden">
+            <ul className="space-y-2">
+              {navData.map(({ path, title, icon }) => (
+                <li
+                  key={path}
+                  className="text-gray-700 hover:bg-gray-200 rounded-lg"
+                >
+                  <NavLink
+                    href={path}
+                    activeClassName="text-blue-500 font-bold"
+                    exact={path === "/dashboard"}
+                    className="flex items-center p-2 space-x-3"
+                  >
+                    {icon} <span>{title}</span>
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
           </div>
-        </aside>
+        )}
+      </nav>
+
+      {/* Sidebar for Desktop */}
+      <div
+        className={`fixed inset-y-0 hidden  left-0 transform bg-white shadow-lg lg:shadow-none lg:relative lg:translate-x-0 lg:flex lg:flex-col lg:w-64 transition-transform duration-300 ease-in-out ${
+          isSidebarVisible ? "" : "-translate-x-full lg:hidden"
+        }`}
+      >
+        <div className="flex justify-between m-4 p-4 rounded-md items-center bg-gray-800 text-white text-xl font-semibold">
+          <div className=" ">My Dashboard</div>
+          {/* Toggle Button for Sidebar on Large Screens */}
+          <button
+            className="hidden lg:block z-40 p-2  bg-white rounded-full shadow-md focus:outline-none"
+            onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+          >
+            {isSidebarVisible ? (
+              <svg
+                className="w-6 h-6 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <svg
+                className="w-6 h-6 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+
+        <div className="flex-1  overflow-y-auto">
+          <ul className="p-4 space-y-2">
+            {navData.map(({ path, title, icon }) => (
+              <li
+                key={path}
+                className="text-gray-700 hover:bg-gray-200 rounded-lg"
+              >
+                <NavLink
+                  href={path}
+                  activeClassName="text-blue-500 font-bold"
+                  exact={path === "/dashboard"}
+                  className="flex items-center p-2 space-x-3"
+                >
+                  {icon} <span>{title}</span>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
+
+      <main className="flex-border border-red-500 p-6 overflow-auto">
+        {/* Main content */}
+      </main>
     </div>
   );
 };

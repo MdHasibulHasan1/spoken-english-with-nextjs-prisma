@@ -20,7 +20,7 @@ export default async function Conjunctions({
   const totalPages = Math.ceil((totalItemCount - heroItemCount) / pageSize);
 
   const conjunctions = await prisma.conjunction.findMany({
-    orderBy: { id: "desc" },
+    orderBy: { serialNumber: "asc" },
     skip:
       (currentPage - 1) * pageSize + (currentPage === 1 ? 0 : heroItemCount),
     take: pageSize + (currentPage === 1 ? heroItemCount : 0),

@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { MdDeleteForever } from "react-icons/md";
 
 async function MyPrepositions() {
-  const prepositions = await prisma.prepositions.findMany({
+  const prepositions = await prisma.preposition.findMany({
     where: {
       bloggerEmail: "hasib7143@gmail.com", // Replace with the actual unique ID value
     },

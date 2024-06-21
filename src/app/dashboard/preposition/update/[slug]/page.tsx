@@ -10,7 +10,7 @@ async function UpdatePreposition({ params }: { params: { slug: string } }) {
   }
 
   try {
-    const preposition = await prisma.prepositions.findUnique({
+    const preposition = await prisma.preposition.findUnique({
       where: {
         id: params.slug,
       },
@@ -21,7 +21,7 @@ async function UpdatePreposition({ params }: { params: { slug: string } }) {
     }
 
     return (
-      <div>
+      <div className="w-full">
         {" "}
         <PrepositionsForm key={preposition?.id} {...preposition} />{" "}
       </div>

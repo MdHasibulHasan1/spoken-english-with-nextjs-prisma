@@ -37,11 +37,11 @@ export const afterLoginNavData = [
 export const beforeLoginNavData = [
   ...commonNavData,
   {
-    path: "/signup",
+    path: "/sign-up",
     title: "Signup",
   },
   {
-    path: "/login",
+    path: "/sign-in",
     title: "Login",
   },
 ];

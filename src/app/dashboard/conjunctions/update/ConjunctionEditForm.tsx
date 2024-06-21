@@ -1,4 +1,6 @@
 "use client";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState, ChangeEvent, FormEvent } from "react";
 import toast from "react-hot-toast";
 import { MdAddCircleOutline } from "react-icons/md";
@@ -14,6 +16,7 @@ interface FormData {
   explanation: string;
   examples: Example[];
   id?: string;
+  serialNumber?: number;
 }
 
 const ConjunctionEditForm: React.FC = ({
@@ -21,12 +24,15 @@ const ConjunctionEditForm: React.FC = ({
   explanation,
   examples,
   id,
+  serialNumber,
 }: FormData) => {
   const [formData, setFormData] = useState<FormData>({
     conjunction,
     explanation,
     examples,
+    serialNumber,
   });
+  const router = useRouter();
   const [message, setMessage] = useState("");
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -79,12 +85,34 @@ const ConjunctionEditForm: React.FC = ({
       console.error("Error:", error);
     }
   };
-
+  const deleteConjunction = async () => {
+    try {
+      const res = await axios.delete(`/api/conjunction/${id}`);
+      console.log(res);
+      toast.success("Conjunction deleted successfully.");
+      router.push("/dashboard/conjunctions/mine");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
   return (
     <form
       onSubmit={handleSubmit}
       className="max-w-xl mx-auto p-4 shadow-md rounded-md bg-white"
     >
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Serial Number:
+        </label>
+        <input
+          type="number"
+          name="serialNumber"
+          value={formData?.serialNumber}
+          onChange={handleInputChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Conjunction:
@@ -146,13 +174,23 @@ const ConjunctionEditForm: React.FC = ({
           </button>
         </div>
       </div>{" "}
-      <p className="text-red-500 p-2 rounded-md">{message}</p>
-      <button
-        type="submit"
-        className="bg-green-500 w-full hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      >
-        Submit
-      </button>
+      <div className="flex justify-between items-center mt-6">
+        <button
+          type="submit"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-4/5"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          onClick={deleteConjunction}
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/5 flex items-center justify-center"
+        >
+          <RiDeleteBinLine className="mr-2" size={20} />
+          Delete
+        </button>
+        <p className="text-red-500 ">{message}</p>
+      </div>
     </form>
   );
 };

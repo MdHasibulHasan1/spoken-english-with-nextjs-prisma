@@ -1,4 +1,4 @@
-import { Blog, Example } from "@/types/types";
+import { SpokenRule } from "@/types/types";
 
 interface SpokenRuleCardProps extends Blog {}
 
@@ -12,13 +12,13 @@ const SpokenRuleCard: React.FC<SpokenRuleCardProps> = ({
   category,
   createdAt,
   id,
-}) => {
+}: SpokenRule) => {
   return (
-    <div className="mb-8 p-6 bg-purple-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-purple-200">
-      <div>{id}</div>
+    <div className="mb-8 w-10/12 mx-auto p-6 bg-purple-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-purple-200">
+      {/* <div>{id}</div> */}
       <div className="mb-2">
         <div className="relative flex w-full conjunctions-center justify-center rounded-lg mx-auto bg-yellow-400">
-          <div className="flex text-center px-4 py-2 bg-white w-11/12 rounded-lg justify-center font-bold conjunctions-center cursor-not-allowed text-purple-800">
+          <div className="flex text-center md:px-4 px-2 py-2 bg-white w-11/12 rounded-lg justify-center font-bold conjunctions-center cursor-not-allowed text-purple-800">
             {structure}
             {description}
           </div>

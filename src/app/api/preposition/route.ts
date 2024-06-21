@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       };
       return NextResponse.json(errorResponse, { status: 400 });
     }
-    const newPreposition = await prisma.prepositions.create({
+    const newPreposition = await prisma.preposition.create({
       data: {
         expressions,
         title,

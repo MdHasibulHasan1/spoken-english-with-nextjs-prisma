@@ -19,21 +19,23 @@ async function MyConjunctions() {
           key={conjunction.id}
           className="p-4 mb-4 bg-white shadow-md rounded-md"
         >
-          <p>
+          <p className="text-lg font-semibold">
             <strong>Conjunction:</strong> {conjunction.conjunction}
           </p>
-          <p>
+          <p className="mt-2">
             <strong>Explanation:</strong> {conjunction.explanation}
           </p>
-          <p>
-            <strong>Blogger Email:</strong> {conjunction.bloggerEmail}
+
+          <p className="mt-2">
+            <strong>Created At:</strong>{" "}
+            {new Date(conjunction?.createdAt).toLocaleString()}
           </p>
-          <p>
+          <p className="mt-2">
             <strong>Updated At:</strong>{" "}
             {new Date(conjunction.updatedAt).toLocaleString()}
           </p>
           <Link href={`/dashboard/conjunctions/update/${conjunction?.id}`}>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+            <button className="mt-4 inline-block px-6 py-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-md shadow-md transition duration-300 ease-in-out">
               Update Data
             </button>
           </Link>

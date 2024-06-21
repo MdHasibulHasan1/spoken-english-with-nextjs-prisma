@@ -8,21 +8,22 @@ import { usePathname, useRouter } from "next/navigation";
 import { startTransition, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import NavLink from "./NavLink";
-
+import { useSession, signOut } from "next-auth/react";
+import { User } from "next-auth";
 const Navbar = () => {
   // const { user, logout } = useAuth();
   // const { uid, displayName, photoURL } = user || {};
+  const { data: session } = useSession();
+  const user: User = session?.user;
+  console.log(user);
 
-  const user = true;
   const navData = user ? afterLoginNavData : beforeLoginNavData;
 
   const { replace, refresh } = useRouter();
   const path = usePathname();
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const handleLogout = async () => {};
-
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isProfileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
   return (
     <nav className="px-4 mx-auto font-semibold  sticky top-0 z-10 w-full uppercase text-lg py-6 bg-gray-200">
       <div className="">
@@ -47,6 +48,33 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
+
+          <div className="flex items-center gap-4">
+            {user && (
+              <div className="relative">
+                <Image
+                  onClick={() => setProfileMenuOpen(!isProfileMenuOpen)}
+                  className="w-12 h-12 rounded-full cursor-pointer"
+                  src={user.image || "https://i.ibb.co/LYS7q2X/user.png"}
+                  alt="User Avatar"
+                  width={32} // Specify the width
+                  height={32} // Specify the height
+                />
+
+                {isProfileMenuOpen && (
+                  <ul className="absolute right-0 mt-2 bg-white border rounded-lg shadow-lg z-10">
+                    <li className="px-4 py-2 hover:bg-gray-200">
+                      <Link href="/profile">Profile</Link>
+                    </li>
+
+                    <li className="px-4 py-2 hover:bg-gray-200">
+                      <button onClick={() => signOut()}>Logout</button>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            )}
+          </div>
           <button
             aria-label="Open Menu"
             title="Open Menu"

@@ -14,7 +14,7 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     } */
 
-    const preposition = await prisma.prepositions.delete({
+    const preposition = await prisma.preposition.delete({
       where: {
         id,
       },
@@ -36,7 +36,7 @@ export async function PATCH(
 ) {
   const body = await request.json();
   const { id } = params;
-  const { expressions, title, usages } = body;
+  const { expressions, title, usages, serialNumber } = body;
 
   try {
     // Validation: Check if any of the required fields are missing
@@ -48,7 +48,7 @@ export async function PATCH(
       return NextResponse.json(errorResponse, { status: 400 });
     }
 
-    const updatePreposition = await prisma.prepositions.update({
+    const updatePreposition = await prisma.preposition.update({
       where: {
         id: id,
       },
@@ -56,6 +56,7 @@ export async function PATCH(
         title,
         expressions,
         usages,
+        serialNumber: parseInt(serialNumber, 10),
         updatedAt: new Date(),
       },
     });

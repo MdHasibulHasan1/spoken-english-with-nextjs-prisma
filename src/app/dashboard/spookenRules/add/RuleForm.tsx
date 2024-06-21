@@ -2,22 +2,24 @@
 import React, { useState } from "react";
 
 import { useRouter } from "next/navigation";
-import { createBlog } from "./actions";
-import { Blog, Example } from "@/types/types";
+import { Rule, Example } from "@/types/types";
+import { MdAddCircleOutline } from "react-icons/md";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { addRule } from "./actions";
+import toast from "react-hot-toast";
 
-const AddBlogForm: React.FC = () => {
+const AddRuleForm: React.FC = () => {
   const router = useRouter();
-  const [formData, setFormData] = useState<Blog>({
+  const [formData, setFormData] = useState<Rule>({
     bloggerName: "",
     bloggerImage: "",
     bloggerEmail: "",
     structure: "",
     description: "",
     examples: [{ english: "", bangla: "" }],
-    category: "",
-    createdAt: new Date(),
+    category: "All",
   });
-  const [blogLoading, setBlogLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -60,10 +62,23 @@ const AddBlogForm: React.FC = () => {
 
   const onSubmitForm = async (event: React.FormEvent) => {
     event.preventDefault();
-    setBlogLoading(true);
+    const toastId = toast.loading("Loading...");
+    setIsLoading(true);
     try {
-      const blog = await createBlog(formData);
-      console.log(blog);
+      const rule = await addRule(formData);
+      if (rule?.success) {
+        toast.success(rule?.message);
+        toast.dismiss(toastId);
+        setIsLoading(false);
+      } else {
+        toast.error(rule?.message);
+        toast.dismiss(toastId);
+
+        setIsLoading(false);
+      }
+
+      console.log("Success:", rule);
+
       /*  setFormData({
         ...formData,
         structure: "",
@@ -74,12 +89,15 @@ const AddBlogForm: React.FC = () => {
       // router.push("/");
     } catch (error) {
       console.error("Error adding blog:", error);
+      setIsLoading(false);
     }
-    setBlogLoading(false);
   };
 
   return (
-    <form onSubmit={onSubmitForm} className="md:w-8/12 mx-auto px-2">
+    <form
+      onSubmit={onSubmitForm}
+      className="md:w-8/12 mx-auto p-4 rounded-lg bg-white"
+    >
       <div className="mb-4">
         <label htmlFor="category" className="block font-medium text-gray-700">
           Category
@@ -157,29 +175,28 @@ const AddBlogForm: React.FC = () => {
             <button
               type="button"
               onClick={() => removeExample(index)}
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className=" font-bold rounded focus:outline-none focus:shadow-outline"
             >
-              Remove
+              <RiDeleteBinLine size={24} color="red" />
             </button>
           </div>
         ))}
-        <button
-          type="button"
-          onClick={addExample}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Add Example
-        </button>
+
+        <div className="flex justify-start">
+          <button type="button" onClick={addExample} className="btn btn-circle">
+            <MdAddCircleOutline size={24} />
+          </button>
+        </div>
       </div>
       <button
         type="submit"
-        disabled={blogLoading}
+        disabled={isLoading}
         className="px-4 py-2 w-full disabled:cursor-not-allowed disabled:opacity-50 text-white bg-blue-500 rounded hover:bg-blue-600"
       >
-        {blogLoading ? "Adding..." : "Add Blog"}
+        {isLoading ? "Adding..." : "Add Blog"}
       </button>
     </form>
   );
 };
 
-export default AddBlogForm;
+export default AddRuleForm;

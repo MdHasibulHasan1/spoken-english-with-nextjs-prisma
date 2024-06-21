@@ -3,6 +3,7 @@ import { Inter, Ubuntu } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Toaster from "@/components/Toaster";
+import AuthProvider from "@/context/AuthProvider";
 const inter = Inter({ subsets: ["latin"] });
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -21,11 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={ubuntu.className}>
-        {/* <Navbar /> */}
-        {children}
-        <Toaster />
-      </body>
+      <AuthProvider>
+        <body className={inter.className}>
+          {children}
+          <Toaster />
+        </body>
+      </AuthProvider>
     </html>
   );
 }

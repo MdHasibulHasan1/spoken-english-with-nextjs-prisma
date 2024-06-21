@@ -21,7 +21,7 @@ async function UpdateConjunction({ params }: { params: { slug: string } }) {
     }
 
     return (
-      <div>
+      <div className="w-full">
         <ConjunctionEditForm {...conjunction} />
       </div>
     );

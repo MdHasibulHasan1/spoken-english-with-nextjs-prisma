@@ -1,30 +1,7 @@
 import PaginationBar from "@/components/PaginationBar";
-import BlogCard from "@/components/BlogCard";
-import Blog2 from "@/components/Blog2";
-import LongSentences from "@/components/LongSentences";
 import { prisma } from "@/lib/db/prisma";
-import Image from "next/image";
-import Link from "next/link";
-import { Ubuntu } from "next/font/google";
 import SpokenRuleCard from "@/components/SpokenRuleCard";
-
-// Define the type for a blog post
-interface Blog {
-  bloggerName: string | null;
-  bloggerImage: string | null;
-  bloggerEmail: string;
-  structure: string;
-  description: string;
-  category: string;
-  status: string;
-  id: string;
-  date: string;
-  examples: string[];
-  favorites: string[];
-  modified_time: Date | null;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+import { SpokenRule } from "@/types/types";
 
 // Define the type for Home component props
 interface HomeProps {
@@ -35,7 +12,6 @@ export default async function Home({
   searchParams: { page = "1" },
 }: HomeProps) {
   const currentPage = parseInt(page);
-
   const pageSize = 3;
   const heroItemCount = 1;
 
@@ -43,7 +19,7 @@ export default async function Home({
 
   const totalPages = Math.ceil((totalItemCount - heroItemCount) / pageSize);
 
-  const spokenRules: Blog[] = await prisma.spokenRule.findMany({
+  const spokenRules: SpokenRule[] = await prisma.spokenRule.findMany({
     orderBy: { id: "desc" },
     skip:
       (currentPage - 1) * pageSize + (currentPage === 1 ? 0 : heroItemCount),

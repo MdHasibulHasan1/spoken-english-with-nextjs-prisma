@@ -86,7 +86,6 @@ const PrepositionsForm: React.FC = () => {
     const toastId = toast.loading("Loading...");
     setIsLoading(true);
     try {
-      const toastId = toast.loading("Loading...");
       const res = await fetch("/api/preposition", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -100,20 +99,22 @@ const PrepositionsForm: React.FC = () => {
       const data = await res.json();
       if (data.success) {
         toast.success(data.message);
+        toast.dismiss(toastId);
         setMessage(data.message);
         setIsLoading(false);
       } else {
         toast.error(data.message);
+        toast.dismiss(toastId);
         setMessage(data.message);
         setIsLoading(false);
       }
-      toast.success("Your Preposition Updated successfully");
+
       console.log("Success:", data);
     } catch (error) {
       console.error("Error:", error);
       setIsLoading(false);
       toast.dismiss(toastId);
-      toast.error(error.message || "Something went wrong. update failed.");
+      toast.error(error?.message || "Something went wrong. update failed.");
       // setMessage(error?.message || error);
     }
   };

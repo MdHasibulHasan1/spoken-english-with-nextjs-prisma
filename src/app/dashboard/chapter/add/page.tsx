@@ -86,7 +86,7 @@ const CreatePost = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/add-chapter", {
+      const res = await fetch("/api/chapter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -184,7 +184,6 @@ const CreatePost = () => {
           placeholder="Write something..."
           className="h-72 mb-12"
           modules={modules}
-          required
           onChange={(value) => setFormData({ ...formData, content: value })}
         />
         <button

@@ -44,7 +44,7 @@ async function MySpokenRules() {
           <p className="text-sm text-gray-500">
             Updated At: {new Date(rule.updatedAt).toLocaleString()}
           </p>
-          <Link href={`/dashboard/spoken-rules/update/${rule?.id}`}>
+          <Link href={`/dashboard/spookenRules/update/${rule?.id}`}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
               Update Data
             </button>

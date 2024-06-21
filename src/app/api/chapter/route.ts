@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { ApiResponse } from "@/types/ApiResponse";
 
 const prisma = new PrismaClient();
-
-export interface ApiResponse {
-  success: boolean;
-  message: string;
-  payload: object;
-}
 
 export async function POST(req: NextRequest) {
   try {

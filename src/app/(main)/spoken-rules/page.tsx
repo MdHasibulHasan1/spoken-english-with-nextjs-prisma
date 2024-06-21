@@ -13,18 +13,17 @@ export default async function Conjunctions({
 }: SpokenRulesProps) {
   const currentPage = parseInt(page);
 
-  const pageSize = 1;
+  const limit = 50;
   const heroItemCount = 1;
 
   const totalItemCount = await prisma.spokenRule.count();
 
-  const totalPages = Math.ceil((totalItemCount - heroItemCount) / pageSize);
+  const totalPages = Math.ceil((totalItemCount - heroItemCount) / limit);
 
   const spokenRules = await prisma.spokenRule.findMany({
     orderBy: { id: "desc" },
-    skip:
-      (currentPage - 1) * pageSize + (currentPage === 1 ? 0 : heroItemCount),
-    take: pageSize + (currentPage === 1 ? heroItemCount : 0),
+    skip: (currentPage - 1) * limit + (currentPage === 1 ? 0 : heroItemCount),
+    take: limit + (currentPage === 1 ? heroItemCount : 0),
     include: {
       examples: true,
     },

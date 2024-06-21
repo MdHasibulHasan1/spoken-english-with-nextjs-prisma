@@ -52,9 +52,9 @@ const ConjunctionForm: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
+    const toastId = toast.loading("Loading...");
     try {
-      const res = await fetch("/api/add-conjunction", {
+      const res = await fetch("/api/conjunction", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -67,9 +67,13 @@ const ConjunctionForm: React.FC = () => {
       const data = await res.json();
       if (data.success) {
         toast.success(data.message);
+
+        toast.dismiss(toastId);
         setMessage(data.message);
       } else {
         toast.error(data.message);
+
+        toast.dismiss(toastId);
         setMessage(data.message);
       }
       console.log("Success:", data);

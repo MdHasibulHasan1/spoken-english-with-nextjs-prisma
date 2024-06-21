@@ -24,14 +24,14 @@ async function MyChapters() {
           <p>
             <strong>Slug:</strong> {p?.slug}
           </p>
-          <p>
+          <div>
             <strong>Content:</strong>
 
             <div
               className="p-3 max-w-2xl mx-auto w-full prose prose-lg post-content"
               dangerouslySetInnerHTML={{ __html: p?.content }}
             ></div>
-          </p>
+          </div>
           <p>
             <strong>Created At:</strong>{" "}
             {new Date(p?.createdAt).toLocaleString()}
@@ -40,7 +40,7 @@ async function MyChapters() {
             <strong>Updated At:</strong>{" "}
             {new Date(p?.updatedAt).toLocaleString()}
           </p>
-          <Link href={`/dashboard/preposition/update/${p?.id}`}>
+          <Link href={`/dashboard/chapter/update/${p?.id}`}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
               Update Data
             </button>

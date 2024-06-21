@@ -16,12 +16,12 @@ export default async function Prepositions({
   const pageSize = 1;
   const heroItemCount = 1;
 
-  const totalItemCount = await prisma.prepositions.count();
+  const totalItemCount = await prisma.preposition.count();
 
   const totalPages = Math.ceil((totalItemCount - heroItemCount) / pageSize);
 
-  const prepositions = await prisma.prepositions.findMany({
-    orderBy: { id: "desc" },
+  const prepositions = await prisma.preposition.findMany({
+    orderBy: { serialNumber: "desc" },
     skip:
       (currentPage - 1) * pageSize + (currentPage === 1 ? 0 : heroItemCount),
     take: pageSize + (currentPage === 1 ? heroItemCount : 0),

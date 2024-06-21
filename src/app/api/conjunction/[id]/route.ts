@@ -8,7 +8,7 @@ export async function PATCH(
 ) {
   const body = await request.json();
   const { id } = params;
-  const { conjunction, explanation, examples } = body;
+  const { conjunction, explanation, examples, serialNumber } = body;
 
   try {
     // Validation: Check if any of the required fields are missing
@@ -25,7 +25,7 @@ export async function PATCH(
       return NextResponse.json(errorResponse, { status: 400 });
     }
 
-    const updateProduct = await prisma.conjunction.update({
+    const updatedConjunction = await prisma.conjunction.update({
       where: {
         id: id,
       },
@@ -33,21 +33,50 @@ export async function PATCH(
         conjunction,
         explanation,
         examples,
+        serialNumber: parseInt(serialNumber, 10),
       },
     });
 
     const successResponse: ApiResponse = {
       success: true,
       message: "Conjunction updated successfully",
-      payload: updateProduct,
+      payload: updatedConjunction,
     };
     return NextResponse.json(successResponse);
   } catch (error) {
-    console.log("Error updating product", error);
+    console.log("Error updating conjunction:", error);
     const errorResponse: ApiResponse = {
       success: false,
       message: "Failed to update conjunction",
     };
     return NextResponse.json(errorResponse, { status: 500 });
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    // const { userId } = auth();
+    const { id } = params;
+    /* 
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    } */
+
+    const conjunction = await prisma.conjunction.delete({
+      where: {
+        id,
+      },
+    });
+
+    return NextResponse.json(conjunction);
+  } catch (error) {
+    console.log("ERROR DELETING conjunction: ", error);
+    return NextResponse.json({
+      error: "Error deleting conjunction",
+      status: 500,
+    });
   }
 }

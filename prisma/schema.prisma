@@ -13,14 +13,16 @@ type PrepositionsUsages {
   examples    String[]
 }
 
-model prepositions {
+model Preposition {
   id          String               @id @default(auto()) @map("_id") @db.ObjectId
   expressions String[]
   title       String
   bloggerEmail String   @default("hasib7143@gmail.com")
   usages      PrepositionsUsages[]
-  createdAt DateTime? @db.Date
+  serialNumber Int? @default(0)
+  createdAt DateTime? @default(now())
   updatedAt     DateTime  @updatedAt @default(now())
+  @@map("prepositions")
 }
 
 
@@ -41,9 +43,10 @@ model Chapter {
   // slug      Json?    @unique
   
   // title     String   @unique
+  serialNumber Int? @default(0)
   title     String?
   statue String? @default("pending")
-  createdAt DateTime? @db.Date @default(now())
+  createdAt DateTime? @default(now())
   updatedAt     DateTime  @updatedAt @default(now())
   @@map("chapters")
 }
@@ -54,24 +57,26 @@ model Blog {
   bloggerImage  String?
   bloggerName   String? @default("Md. Hasibul Hasan")
   category      String
-  createdAt     DateTime?  @db.Date
   description   String
   examples      String[]
   favorites     String[]
+  serialNumber Int? @default(0)
   status        String    @default("Pending") // Add default value "Pending"
   structure     String
+  createdAt     DateTime?   @default(now())
   updatedAt     DateTime  @updatedAt @default(now())
   @@map("blogs")
 }
 
 
-model spokenRule {
+model SpokenRule {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   bloggerEmail  String    @default("hasib7143@gmail.com")
   bloggerImage  String?
   bloggerName   String?   @default("Md. Hasibul Hasan")
   category      String
   description   String
+  serialNumber  Int? @default(0)
   examples      Examples[]
   favorites     String[]
   status        String    @default("Pending")
@@ -80,26 +85,43 @@ model spokenRule {
   updatedAt     DateTime  @updatedAt @default(now())
   @@map("spokenRules")
 }
+
+// model User {
+//   id             String   @id @default(auto()) @map("_id") @db.ObjectId
+//   name           String?
+//   email          String   @unique
+//   password       String
+//   image          String?
+//   emailVerified  DateTime?
+//     @@map("users")
+// }
 model User {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  email String
-  name  String
-  role  String?
-  createdAt     DateTime?  @db.Date @default(now())
-  updatedAt     DateTime?  @db.Date @default(now())
-  @@map("users")
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String   @unique
+  password       String
+  image          String?
+  role        Role      @default(USER)
+  emailVerified  DateTime?
+  resetToken     String?  @unique
+  resetTokenExpiry DateTime?
+  createdAt     DateTime?  @default(now())
+  updatedAt     DateTime  @updatedAt @default(now())
+   @@map("users")
 }
-
-
-
-
+enum Role {
+  ADMIN
+  EDITOR
+  USER
+}
 model Conjunction {
   id          String                 @id @default(auto()) @map("_id") @db.ObjectId
   conjunction String
   examples    Examples[]
   explanation String
+  serialNumber Int? @default(0)
   bloggerEmail String  @default("hasib7143@gmail.com")
-  createdAt     DateTime?  @db.Date @default(now())
+  createdAt     DateTime?  @default(now())
   updatedAt     DateTime  @updatedAt @default(now())
   @@map("Conjunctions")
 }
