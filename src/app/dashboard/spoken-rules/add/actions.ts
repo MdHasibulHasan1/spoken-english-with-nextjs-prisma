@@ -10,8 +10,8 @@ export async function addRule(formData: Rule) {
     redirect("/api/auth/signin?callbackUrl=/add-product");
   }
  */
-  const { category, structure, description, examples } = formData;
-  console.log(category, structure, description, examples);
+  const { category, structure, note, examples } = formData;
+  console.log(category, structure, note, examples);
   if (!structure || !Array.isArray(examples) || !category) {
     const response: ApiResponse = {
       success: false,
@@ -22,7 +22,7 @@ export async function addRule(formData: Rule) {
 
   try {
     const createdRule = await prisma.spokenRule.create({
-      data: { structure, description, examples, category },
+      data: { structure, note, examples, category },
     });
     const successResponse: ApiResponse = {
       success: true,

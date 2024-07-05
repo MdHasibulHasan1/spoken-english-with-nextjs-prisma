@@ -11,8 +11,6 @@ import NavLink from "./NavLink";
 import { useSession, signOut } from "next-auth/react";
 import { User } from "next-auth";
 const Navbar = () => {
-  // const { user, logout } = useAuth();
-  // const { uid, displayName, photoURL } = user || {};
   const { data: session } = useSession();
   const user: User = session?.user;
   console.log(user);
@@ -100,9 +98,9 @@ const Navbar = () => {
           </button>
         </div>
 
-        <div className="lg:hidden">
+        <div className="lg:hidden rounded-3xl">
           {isMenuOpen && (
-            <div className="absolute top-0 bg-white left-0 w-full">
+            <div className="absolute top-0 bg-gray-100 border border-gray-500 w-full left-0  rounded-badge">
               <div className="p-5 bg-primary-500 border rounded shadow-sm">
                 <div className="flex items-center justify-between mb-4 relative">
                   <button

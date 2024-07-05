@@ -1,9 +1,11 @@
-"use client";
 import { useState } from "react";
 import NavLink from "@/components/navbar/NavLink";
-import { GoHome, GoPerson, GoPlus, GoListUnordered } from "react-icons/go";
+import { GoPerson, GoPlus, GoListUnordered } from "react-icons/go";
+import { SiAwssecretsmanager } from "react-icons/si";
 import { MdDashboard } from "react-icons/md";
-
+import Link from "next/link";
+import { FaRegArrowAltCircleLeft } from "react-icons/fa";
+import { useSession } from "next-auth/react";
 const navData = [
   {
     path: "/dashboard",
@@ -11,17 +13,22 @@ const navData = [
     icon: <MdDashboard />,
   },
   {
-    path: "/dashboard/manage-users",
+    path: "/dashboard/admin/manage-users",
     title: "Manage Users",
     icon: <GoPerson />,
   },
   {
-    path: "/dashboard/preposition/add",
+    path: "/dashboard/admin/spoken-rules/manage",
+    title: "Manage Rules",
+    icon: <SiAwssecretsmanager />,
+  },
+  {
+    path: "/dashboard/prepositions/add",
     title: "Add Preposition",
     icon: <GoPlus />,
   },
   {
-    path: "/dashboard/preposition/mine",
+    path: "/dashboard/prepositions/mine",
     title: "My Prepositions",
     icon: <GoListUnordered />,
   },
@@ -36,17 +43,26 @@ const navData = [
     icon: <GoListUnordered />,
   },
   {
-    path: "/dashboard/chapter/add",
+    path: "/dashboard/chapters/add",
     title: "Add a Chapter",
     icon: <GoPlus />,
   },
   {
-    path: "/dashboard/chapter/mine",
+    path: "/dashboard/chapters/mine",
     title: "My Chapters",
     icon: <GoListUnordered />,
   },
+  {
+    path: "/dashboard/spoken-rules/add",
+    title: "Add A Rule",
+    icon: <GoPlus />,
+  },
+  {
+    path: "/dashboard/spoken-rules/mine",
+    title: "My Spoken Rules",
+    icon: <GoListUnordered />,
+  },
 ];
-
 const Sidebar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);

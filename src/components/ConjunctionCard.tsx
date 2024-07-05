@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ConjunctionCard({ conjunction }) {
   return (
-    <div className="mb-8 p-6 bg-purple-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-purple-200">
+    <div className="lg:w-8/12 w-full mx-auto mb-8 p-6 bg-purple-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-purple-200">
       <div className="mb-2">
         <div className="relative flex w-full conjunctions-center justify-center rounded-lg mx-auto bg-yellow-400">
           <div className="flex text-center px-4 py-2 bg-white w-11/12 rounded-lg justify-center font-bold conjunctions-center cursor-not-allowed text-purple-800">

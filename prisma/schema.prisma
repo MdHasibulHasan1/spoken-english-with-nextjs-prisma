@@ -54,7 +54,7 @@ model Chapter {
 model Blog {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   bloggerEmail  String @default("hasib7143@gmail.com")
-  bloggerImage  String?
+  bloggerImage  String? @default("https://i.ibb.co/Sw3NrxS/727399.png")
   bloggerName   String? @default("Md. Hasibul Hasan")
   category      String
   description   String
@@ -68,52 +68,53 @@ model Blog {
   @@map("blogs")
 }
 
-
 model SpokenRule {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  bloggerEmail  String    @default("hasib7143@gmail.com")
-  bloggerImage  String?
-  bloggerName   String?   @default("Md. Hasibul Hasan")
   category      String
-  description   String
-  serialNumber  Int? @default(0)
+  note   String
+  serialNumber  Int?      @default(0)
   examples      Examples[]
   favorites     String[]
   status        String    @default("Pending")
   structure     String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt @default(now())
+  userId        String  @db.ObjectId
+  author          User      @relation(fields: [userId], references: [id])
   @@map("spokenRules")
 }
 
-// model User {
-//   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-//   name           String?
-//   email          String   @unique
-//   password       String
-//   image          String?
-//   emailVerified  DateTime?
-//     @@map("users")
-// }
 model User {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
-  email          String   @unique
-  password       String
-  image          String?
-  role        Role      @default(USER)
-  emailVerified  DateTime?
-  resetToken     String?  @unique
+  id              String     @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  email           String     @unique
+  password        String
+  image           String? @default("https://i.ibb.co/Sw3NrxS/727399.png")
+  role            Role       @default(USER)
+  profile  Profile?
+  emailVerified   DateTime?
+  resetToken      String?    
   resetTokenExpiry DateTime?
-  createdAt     DateTime?  @default(now())
-  updatedAt     DateTime  @updatedAt @default(now())
-   @@map("users")
+  createdAt       DateTime?  @default(now())
+  updatedAt       DateTime   @updatedAt @default(now())
+  spokenRules     SpokenRule[]
+  @@map("users")
+}
+
+model Profile {
+   id              String     @id @default(auto()) @map("_id") @db.ObjectId
+  bio       String?
+  userId        String  @db.ObjectId @unique
+  user          User      @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 enum Role {
   ADMIN
   EDITOR
   USER
 }
+
 model Conjunction {
   id          String                 @id @default(auto()) @map("_id") @db.ObjectId
   conjunction String

@@ -31,7 +31,7 @@ async function MyPrepositions() {
             <strong>Updated At:</strong>{" "}
             {new Date(p?.updatedAt).toLocaleString()}
           </p>
-          <Link href={`/dashboard/preposition/update/${p?.id}`}>
+          <Link href={`/dashboard/prepositions/update/${p?.id}`}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
               Update Data
             </button>

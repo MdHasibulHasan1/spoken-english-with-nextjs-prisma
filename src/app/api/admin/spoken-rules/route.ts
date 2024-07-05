@@ -16,10 +16,8 @@ export async function GET(req: NextRequest) {
     const totalRecords = await prisma.spokenRule.count({
       where: {
         OR: [
-          { bloggerEmail: { contains: search, mode: "insensitive" } },
-          { bloggerName: { contains: search, mode: "insensitive" } },
           { category: { contains: search, mode: "insensitive" } },
-          { description: { contains: search, mode: "insensitive" } },
+          { note: { contains: search, mode: "insensitive" } },
           { status: { contains: search, mode: "insensitive" } },
           { structure: { contains: search, mode: "insensitive" } },
         ],
@@ -29,10 +27,8 @@ export async function GET(req: NextRequest) {
     const rules = await prisma.spokenRule.findMany({
       where: {
         OR: [
-          { bloggerEmail: { contains: search, mode: "insensitive" } },
-          { bloggerName: { contains: search, mode: "insensitive" } },
           { category: { contains: search, mode: "insensitive" } },
-          { description: { contains: search, mode: "insensitive" } },
+          { note: { contains: search, mode: "insensitive" } },
           { status: { contains: search, mode: "insensitive" } },
           { structure: { contains: search, mode: "insensitive" } },
         ],

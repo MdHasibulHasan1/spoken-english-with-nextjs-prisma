@@ -15,7 +15,7 @@ const AddRuleForm: React.FC = () => {
     bloggerImage: "",
     bloggerEmail: "",
     structure: "",
-    description: "",
+    note: "",
     examples: [{ english: "", bangla: "" }],
     category: "All",
   });
@@ -82,7 +82,7 @@ const AddRuleForm: React.FC = () => {
       /*  setFormData({
         ...formData,
         structure: "",
-        description: "",
+        note: "",
         examples: [{ english: "", bangla: "" }],
         category: "question",
       }); */
@@ -135,16 +135,13 @@ const AddRuleForm: React.FC = () => {
       </div>
 
       <div className="mb-4">
-        <label
-          htmlFor="description"
-          className="block mb-2 font-medium text-gray-700"
-        >
-          Description
+        <label htmlFor="note" className="block mb-2 font-medium text-gray-700">
+          Note
         </label>
         <textarea
-          id="description"
-          name="description"
-          value={formData.description}
+          id="note"
+          name="note"
+          value={formData.note}
           onChange={handleInputChange}
           className="block w-full px-3 py-2 border rounded-md focus:outline-none border-gray-300"
         />

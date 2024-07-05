@@ -25,9 +25,6 @@ export default async function Prepositions({
     skip:
       (currentPage - 1) * pageSize + (currentPage === 1 ? 0 : heroItemCount),
     take: pageSize + (currentPage === 1 ? heroItemCount : 0),
-    include: {
-      usages: true,
-    },
   });
 
   return (

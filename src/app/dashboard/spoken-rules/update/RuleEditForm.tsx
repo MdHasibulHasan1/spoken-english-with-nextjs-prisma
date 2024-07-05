@@ -7,8 +7,11 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import toast from "react-hot-toast";
 import axios from "axios";
+interface RuleEditFormProps {
+  rule: Rule;
+}
 
-const RuleEditForm: React.FC = ({ rule }): any => {
+const RuleEditForm: React.FC<RuleEditFormProps> = ({ rule }) => {
   console.log(rule);
 
   const router = useRouter();
@@ -16,7 +19,9 @@ const RuleEditForm: React.FC = ({ rule }): any => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = event.target;
     setFormData({
@@ -90,7 +95,7 @@ const RuleEditForm: React.FC = ({ rule }): any => {
     try {
       await axios.delete(`/api/spoken-rules/${rule?.id}`);
       toast.success("Rule deleted successfully.");
-      router.push("/dashboard/spookenRules/mine");
+      router.push("/dashboard/spoken-rules/mine");
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -150,16 +155,13 @@ const RuleEditForm: React.FC = ({ rule }): any => {
       </div>
 
       <div className="mb-4">
-        <label
-          htmlFor="description"
-          className="block mb-2 font-medium text-gray-700"
-        >
-          Description
+        <label htmlFor="note" className="block mb-2 font-medium text-gray-700">
+          Note
         </label>
         <textarea
-          id="description"
-          name="description"
-          value={formData?.description}
+          id="note"
+          name="note"
+          value={formData?.note}
           onChange={handleInputChange}
           className="block w-full px-3 py-2 border rounded-md focus:outline-none border-gray-300"
         />

@@ -177,14 +177,14 @@ const ConjunctionEditForm: React.FC = ({
       <div className="flex justify-between items-center mt-6">
         <button
           type="submit"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-4/5"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-l focus:outline-none focus:shadow-outline w-4/5"
         >
           Update
         </button>
         <button
           type="button"
           onClick={deleteConjunction}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/5 flex items-center justify-center"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-r-full focus:outline-none focus:shadow-outline w-1/5 flex items-center justify-center"
         >
           <RiDeleteBinLine className="mr-2" size={20} />
           Delete

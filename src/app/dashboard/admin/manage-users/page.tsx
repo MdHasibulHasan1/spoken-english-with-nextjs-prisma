@@ -3,6 +3,7 @@ import { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
 import { User } from "@/types/types";
 import SectionTitle from "@/components/SectionTitle";
+import Loader from "@/components/Loader";
 
 const ManageUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -14,12 +15,14 @@ const ManageUsers = () => {
   const [totalUsers, setTotalUsers] = useState<number>(0);
   const [editingUserId, setEditingUserId] = useState<string>("");
   const [newRole, setNewRole] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     fetchUsers();
   }, [search, sort, order, page, limit]);
 
   const fetchUsers = async () => {
+    setLoading(true);
     try {
       const response = await axios.get("/api/admin/manage-users", {
         params: {
@@ -35,6 +38,8 @@ const ManageUsers = () => {
       setTotalUsers(totalUsers);
     } catch (error) {
       console.error("Failed to fetch users", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -101,103 +106,109 @@ const ManageUsers = () => {
           <option value={20}>20</option>
         </select>
       </div>
-      <table className="min-w-full text-left bg-white border border-gray-200">
-        <thead>
-          <tr>
-            <th className="py-2 px-4 border-b">Name</th>
-            <th className="py-2 px-4 border-b">Email</th>
-            <th className="py-2 px-4 border-b">Role</th>
-            <th className="py-2 px-4 border-b">Email Verified</th>
-            <th className="py-2 px-4 border-b">Created At</th>
-            <th className="py-2 px-4 border-b">Updated At</th>
-            <th className="py-2 px-4 border-b">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id} className="hover:bg-gray-100">
-              <td className="py-2 px-4 border-b">{user.name}</td>
-              <td className="py-2 px-4 border-b">{user.email}</td>
-              <td className="py-2 px-4 border-b">
-                {editingUserId === user.id ? (
-                  <select
-                    value={newRole}
-                    onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                      setNewRole(e.target.value)
-                    }
-                    className="border p-2 rounded"
-                  >
-                    <option value="USER">USER</option>
-                    <option value="ADMIN">ADMIN</option>
-                  </select>
-                ) : (
-                  user.role
-                )}
-              </td>
-              <td className="py-2 px-4 border-b">
-                {user.emailVerified
-                  ? new Date(user.emailVerified).toLocaleDateString()
-                  : "Not Verified"}
-              </td>
-              <td className="py-2 px-4 border-b">
-                {new Date(user?.createdAt).toLocaleDateString("en-GB")}
-              </td>
-              <td className="py-2 px-4 border-b">
-                {new Date(user.updatedAt).toLocaleDateString("en-GB")}
-              </td>
-              <td className="py-2 px-4 border-b">
-                {editingUserId === user.id ? (
-                  <button
-                    onClick={() => handleRoleUpdate(user.id, newRole)}
-                    className="bg-green-500 text-white py-1 px-4 rounded mr-2"
-                  >
-                    Save
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      setEditingUserId(user.id);
-                      setNewRole(user.role);
-                    }}
-                    className="bg-blue-500 text-white py-1 px-3 rounded mr-2"
-                  >
-                    Edit
-                  </button>
-                )}
-                {editingUserId === user.id && (
-                  <button
-                    onClick={() => {
-                      setEditingUserId(null);
-                      setNewRole("");
-                    }}
-                    className="bg-red-500 text-white py-1 px-2 rounded"
-                  >
-                    Cancel
-                  </button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="flex justify-between items-center mt-4">
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          className="bg-blue-500 text-white py-2 px-4 rounded"
-        >
-          Previous
-        </button>
-        <span className="text-lg">Page {page}</span>
-        <button
-          onClick={() =>
-            setPage((prev) => (users.length < limit ? prev : prev + 1))
-          }
-          className="bg-blue-500 text-white py-2 px-4 rounded"
-        >
-          Next
-        </button>
-      </div>
-      <div className="mt-2">Total Users: {totalUsers}</div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <table className="min-w-full text-left bg-white border border-gray-200">
+            <thead>
+              <tr>
+                <th className="py-2 px-4 border-b">Name</th>
+                <th className="py-2 px-4 border-b">Email</th>
+                <th className="py-2 px-4 border-b">Role</th>
+                <th className="py-2 px-4 border-b">Email Verified</th>
+                <th className="py-2 px-4 border-b">Created At</th>
+                <th className="py-2 px-4 border-b">Updated At</th>
+                <th className="py-2 px-4 border-b">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.id} className="hover:bg-gray-100">
+                  <td className="py-2 px-4 border-b">{user.name}</td>
+                  <td className="py-2 px-4 border-b">{user.email}</td>
+                  <td className="py-2 px-4 border-b">
+                    {editingUserId === user.id ? (
+                      <select
+                        value={newRole}
+                        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                          setNewRole(e.target.value)
+                        }
+                        className="border p-2 rounded"
+                      >
+                        <option value="USER">USER</option>
+                        <option value="ADMIN">ADMIN</option>
+                      </select>
+                    ) : (
+                      user.role
+                    )}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    {user.emailVerified
+                      ? new Date(user.emailVerified).toLocaleDateString()
+                      : "Not Verified"}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    {new Date(user?.createdAt).toLocaleDateString("en-GB")}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    {new Date(user.updatedAt).toLocaleDateString("en-GB")}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    {editingUserId === user.id ? (
+                      <button
+                        onClick={() => handleRoleUpdate(user.id, newRole)}
+                        className="bg-green-500 text-white py-1 px-4 rounded mr-2"
+                      >
+                        Save
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setEditingUserId(user.id);
+                          setNewRole(user.role);
+                        }}
+                        className="bg-blue-500 text-white py-1 px-3 rounded mr-2"
+                      >
+                        Edit
+                      </button>
+                    )}
+                    {editingUserId === user.id && (
+                      <button
+                        onClick={() => {
+                          setEditingUserId(null);
+                          setNewRole("");
+                        }}
+                        className="bg-red-500 text-white py-1 px-2 rounded"
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="flex justify-between items-center mt-4">
+            <button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              className="bg-blue-500 text-white py-2 px-4 rounded"
+            >
+              Previous
+            </button>
+            <span className="text-lg">Page {page}</span>
+            <button
+              onClick={() =>
+                setPage((prev) => (users.length < limit ? prev : prev + 1))
+              }
+              className="bg-blue-500 text-white py-2 px-4 rounded"
+            >
+              Next
+            </button>
+          </div>
+          <div className="mt-2">Total Users: {totalUsers}</div>
+        </>
+      )}
     </div>
   );
 };

@@ -8,12 +8,12 @@ interface SpokenRulesProps {
   searchParams: { page?: string };
 }
 
-export default async function Conjunctions({
+export default async function SpokenRules({
   searchParams: { page = "1" },
 }: SpokenRulesProps) {
   const currentPage = parseInt(page);
 
-  const limit = 50;
+  const limit = 100;
   const heroItemCount = 1;
 
   const totalItemCount = await prisma.spokenRule.count();
@@ -25,15 +25,21 @@ export default async function Conjunctions({
     skip: (currentPage - 1) * limit + (currentPage === 1 ? 0 : heroItemCount),
     take: limit + (currentPage === 1 ? heroItemCount : 0),
     include: {
-      examples: true,
+      author: {
+        select: {
+          image: true,
+          email: true,
+          name: true,
+        },
+      },
     },
   });
 
   return (
     <div className="flex flex-col items-center">
-      <SectionTitle title="Spoken Rules" />
+      <SectionTitle title={`Spoken Rules ${totalItemCount}`} />
       {spokenRules?.map((rule) => (
-        <SpokenRuleCard key={rule.id} {...rule} />
+        <SpokenRuleCard key={rule.id} rule={rule} />
       ))}
 
       {totalPages > 1 && (

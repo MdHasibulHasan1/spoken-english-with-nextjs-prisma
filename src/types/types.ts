@@ -3,7 +3,7 @@ export interface User {
   name: string;
   email: string;
   password: string;
-  image?: string;
+  image?: string | null;
   role: string;
   emailVerified?: Date;
   resetToken?: string;
@@ -18,33 +18,15 @@ export interface Example {
 }
 
 export interface Rule {
-  bloggerName: string;
-  bloggerImage?: string;
-  bloggerEmail: string;
+  serialNumber?: number | null;
   structure: string;
-  description?: string;
+  note?: string;
   examples: Example[];
   category: string;
   createdAt?: Date;
-  id?: string;
-}
-export interface Examples {
-  bangla: string;
-  english: string;
-}
-
-export interface SpokenRule {
-  id: string;
-  bloggerEmail: string;
-  bloggerImage?: string | null;
-  bloggerName?: string | null;
-  category: string;
-  description: string;
-  serialNumber?: number | null;
-  examples: Examples[];
-  favorites: string[];
+  updatedAt?: Date;
   status: string;
-  structure: string;
-  createdAt: Date;
-  updatedAt: Date;
+  id: string;
+  userId: string;
+  author: User[];
 }
