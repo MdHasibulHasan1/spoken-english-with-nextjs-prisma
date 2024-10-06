@@ -1,6 +1,8 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import SectionTitle from "@/components/SectionTitle";
 import { prisma } from "@/lib/db/prisma";
 import axios from "axios";
+import { User, getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -8,9 +10,17 @@ import toast from "react-hot-toast";
 import { MdDeleteForever } from "react-icons/md";
 
 async function MyPrepositions() {
+  const session = await getServerSession(authOptions);
+  const user: User = session?.user;
+
+  // Step 2: Fetch the spoken rules for the user
   const prepositions = await prisma.preposition.findMany({
-    where: {
-      bloggerEmail: "hasib7143@gmail.com", // Replace with the actual unique ID value
+    where: { userId: user.id },
+    include: {
+      author: true, // Including the related author (user) details, if needed
+    },
+    orderBy: {
+      createdAt: "desc", // Use 'desc' if you want to sort in descending order
     },
   });
 

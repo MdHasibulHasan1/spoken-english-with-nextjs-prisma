@@ -1,13 +1,22 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { ApiResponse } from "@/types/ApiResponse";
+import { User, getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/options";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
     const { conjunction, explanation, examples } = await req.json();
-
+    const session = await getServerSession(authOptions);
+    const user: User = session?.user;
+    if (!session || !user) {
+      return Response.json(
+        { success: false, message: "Not authenticated" },
+        { status: 401 }
+      );
+    }
     // Validation: Check if any of the fields are empty
     if (
       !conjunction ||
@@ -32,6 +41,7 @@ export async function POST(req: Request) {
         conjunction,
         explanation,
         examples: filteredExamples,
+        userId: user?.id,
       },
     });
 

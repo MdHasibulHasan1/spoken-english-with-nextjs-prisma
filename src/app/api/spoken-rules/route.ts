@@ -6,6 +6,19 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]/options";
 const prisma = new PrismaClient();
 
+export async function GET(req: Request) {
+  try {
+    const rules = await prisma.spokenRule.findMany();
+    return NextResponse.json(rules);
+  } catch (error: any) {
+    console.error("ERROR GETTING SPOKEN RULES: ", error);
+    return NextResponse.json(
+      { error: "Error Getting Rules", status: 500 },
+      { status: 500 } // Ensure proper status code in response
+    );
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const { category, structure, note, examples } = await req.json();

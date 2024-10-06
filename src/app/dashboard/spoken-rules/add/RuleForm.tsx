@@ -7,20 +7,23 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { addRule } from "./actions";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
+import { User } from "next-auth";
 
 const AddRuleForm: React.FC = () => {
-  const router = useRouter();
+  const { data: session } = useSession();
+  const user: User = session?.user;
+
   const [formData, setFormData] = useState<Rule>({
-    bloggerName: "",
-    bloggerImage: "",
-    bloggerEmail: "",
     structure: "",
     note: "",
     examples: [{ english: "", bangla: "" }],
     category: "All",
+    userId: user?.id,
   });
-  const [isLoading, setIsLoading] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {

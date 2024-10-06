@@ -36,7 +36,7 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    const updateResult = await prisma.spokenRule.updateMany({
+    const updateResult = await prisma.preposition.updateMany({
       data: {
         userId: newUserId,
       },

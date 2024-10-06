@@ -6,6 +6,22 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import toast from "react-hot-toast";
 import axios from "axios";
+import {
+  DndContext,
+  closestCenter,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface RuleEditFormProps {
   rule: Rule;
@@ -15,6 +31,8 @@ const RuleEditForm: React.FC<RuleEditFormProps> = ({ rule }) => {
   const router = useRouter();
   const [formData, setFormData] = useState<Rule>(rule);
   const [isLoading, setIsLoading] = useState(false);
+
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
   const handleInputChange = (
     event: React.ChangeEvent<
@@ -55,6 +73,24 @@ const RuleEditForm: React.FC<RuleEditFormProps> = ({ rule }) => {
       ...formData,
       examples: updatedExamples,
     });
+  };
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      const oldIndex = formData.examples.findIndex(
+        (item) => item.english === active.id
+      );
+      const newIndex = formData.examples.findIndex(
+        (item) => item.english === over.id
+      );
+
+      setFormData({
+        ...formData,
+        examples: arrayMove(formData.examples, oldIndex, newIndex),
+      });
+    }
   };
 
   const onSubmitForm = async (event: React.FormEvent) => {
@@ -165,36 +201,27 @@ const RuleEditForm: React.FC<RuleEditFormProps> = ({ rule }) => {
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Examples:
         </label>
-        {formData?.examples?.map((example, index) => (
-          <div
-            key={index}
-            className="flex gap-2 items-center mb-2 bg-gray-100 p-2 rounded"
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={formData.examples.map((item) => item.english)}
+            strategy={verticalListSortingStrategy}
           >
-            <input
-              type="text"
-              name="english"
-              placeholder="English"
-              value={example.english}
-              onChange={(e) => handleExampleChange(index, e)}
-              className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-            <input
-              type="text"
-              name="bangla"
-              placeholder="Bangla"
-              value={example.bangla}
-              onChange={(e) => handleExampleChange(index, e)}
-              className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-            <button
-              type="button"
-              onClick={() => removeExample(index)}
-              className="font-bold rounded focus:outline-none focus:shadow-outline"
-            >
-              <RiDeleteBinLine size={24} color="red" />
-            </button>
-          </div>
-        ))}
+            {formData?.examples?.map((example, index) => (
+              <SortableItem
+                key={example.english}
+                id={example.english}
+                index={index}
+                example={example}
+                handleExampleChange={handleExampleChange}
+                removeExample={removeExample}
+              />
+            ))}
+          </SortableContext>
+        </DndContext>
 
         <div className="flex justify-start">
           <button type="button" onClick={addExample} className="btn btn-circle">
@@ -223,5 +250,66 @@ const RuleEditForm: React.FC<RuleEditFormProps> = ({ rule }) => {
     </form>
   );
 };
+
+interface SortableItemProps {
+  id: string;
+  index: number;
+  example: Example;
+  handleExampleChange: (
+    index: number,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void;
+  removeExample: (index: number) => void;
+}
+
+function SortableItem({
+  id,
+  index,
+  example,
+  handleExampleChange,
+  removeExample,
+}: SortableItemProps) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="flex gap-2 items-center -z-10 bg-gray-100 p-2 mb-2 rounded"
+    >
+      <input
+        type="text"
+        name="english"
+        placeholder="English"
+        value={example.english}
+        onChange={(e) => handleExampleChange(index, e)}
+        className="shadow appearance-none border rounded z-10 w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      />
+      <input
+        type="text"
+        name="bangla"
+        placeholder="Bangla"
+        value={example?.bangla}
+        onChange={(e) => handleExampleChange(index, e)}
+        className="shadow appearance-none border rounded z-10 w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      />
+      <button
+        type="button"
+        onClick={() => removeExample(index)}
+        className="font-bold rounded focus:outline-none focus:shadow-outline"
+      >
+        <RiDeleteBinLine size={24} color="red" />
+      </button>
+    </div>
+  );
+}
 
 export default RuleEditForm;

@@ -19,15 +19,25 @@ const Navbar = () => {
 
   const { replace, refresh } = useRouter();
   const path = usePathname();
-
+  const pathName = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isProfileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
+  if (pathName.startsWith("/pre")) {
+    return (
+      <div>
+        This is conditional dashboard. remove condition from navbar.
+        <a className="text-red-600" href="/">
+          Home
+        </a>
+      </div>
+    );
+  }
   return (
-    <nav className="px-4 mx-auto font-semibold  sticky top-0 z-10 w-full uppercase text-lg py-6 bg-gray-200">
+    <nav className="px-4 mx-auto font-semibold  sticky top-0 z-10 w-full uppercase text-lg py-6 bg-blue-200">
       <div className="">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-2xl normal-case">
-            Easy Spoken English
+            EnglishElevate
           </Link>
 
           <ul className="lg:flex items-center gap-4 justify-between hidden ">
@@ -38,7 +48,7 @@ const Navbar = () => {
                 <NavLink
                   // onClick={() => setNavToggle(false)}
                   href={path}
-                  activeClassName="text-blue-500"
+                  activeClassName="text-purple-500"
                   exact={path === "/"}
                 >
                   {title}
@@ -125,7 +135,7 @@ const Navbar = () => {
                         <NavLink
                           // onClick={() => setNavToggle(false)}
                           href={path}
-                          activeClassName="text-blue-500"
+                          activeClassName="text-purple-500"
                           exact={path === "/"}
                         >
                           {title}

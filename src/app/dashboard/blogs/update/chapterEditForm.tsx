@@ -32,6 +32,7 @@ const ChapterEditForm = ({ chapter }) => {
   const [publishError, setPublishError] = useState<string | null>(null);
 
   const router = useRouter();
+
   const toolbarOptions = [
     ["bold", "italic", "underline", "strike"],
     ["blockquote", "code-block"],
@@ -174,7 +175,9 @@ const ChapterEditForm = ({ chapter }) => {
             <Image
               src={formData.image}
               alt="Uploaded image"
-              layout="fill"
+              // layout="fill"
+              fill
+              priority
               objectFit="cover"
               className="rounded"
             />

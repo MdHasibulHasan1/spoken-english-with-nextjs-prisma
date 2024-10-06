@@ -111,7 +111,7 @@ const ManageUsers = () => {
       ) : (
         <>
           <table className="min-w-full text-left bg-white border border-gray-200">
-            <thead>
+            <thead className="text-nowrap">
               <tr>
                 <th className="py-2 px-4 border-b">Name</th>
                 <th className="py-2 px-4 border-b">Email</th>
@@ -156,32 +156,32 @@ const ManageUsers = () => {
                   </td>
                   <td className="py-2 px-4 border-b">
                     {editingUserId === user.id ? (
-                      <button
-                        onClick={() => handleRoleUpdate(user.id, newRole)}
-                        className="bg-green-500 text-white py-1 px-4 rounded mr-2"
-                      >
-                        Save
-                      </button>
+                      <div className="flex flex-col text-sm">
+                        <button
+                          onClick={() => handleRoleUpdate(user.id, newRole)}
+                          className="bg-green-500 text-white rounded"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEditingUserId("");
+                            setNewRole("");
+                          }}
+                          className="bg-red-500 text-white  rounded"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     ) : (
                       <button
                         onClick={() => {
                           setEditingUserId(user.id);
                           setNewRole(user.role);
                         }}
-                        className="bg-blue-500 text-white py-1 px-3 rounded mr-2"
+                        className="bg-blue-500 text-white py-1 px-3 rounded"
                       >
                         Edit
-                      </button>
-                    )}
-                    {editingUserId === user.id && (
-                      <button
-                        onClick={() => {
-                          setEditingUserId(null);
-                          setNewRole("");
-                        }}
-                        className="bg-red-500 text-white py-1 px-2 rounded"
-                      >
-                        Cancel
                       </button>
                     )}
                   </td>

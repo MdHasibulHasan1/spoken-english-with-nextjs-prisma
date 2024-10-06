@@ -1,12 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { ApiResponse } from "@/types/ApiResponse";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/options";
+import { User } from "next-auth";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
   try {
     const { title, content, image, category } = await req.json();
+    const session = await getServerSession(authOptions);
+    const user: User | null = session?.user || null;
+
+    if (!session || !user || !user.id) {
+      return NextResponse.json(
+        { success: false, message: "Not authenticated" },
+        { status: 401 }
+      );
+    }
 
     // Log incoming data for debugging
     console.log("Received data:", { title, content, image, category });
@@ -28,6 +40,7 @@ export async function POST(req: NextRequest) {
         content,
         image,
         category,
+        userId: user.id,
         // Ensure slug is URL friendly
         slug: title
           .split(" ")

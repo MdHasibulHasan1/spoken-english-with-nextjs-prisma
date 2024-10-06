@@ -25,8 +25,6 @@ export interface Rule {
   category: string;
   createdAt?: Date;
   updatedAt?: Date;
-  status: string;
-  id: string;
-  userId: string;
-  author: User[];
+  status?: string;
+  userId: string | undefined;
 }
