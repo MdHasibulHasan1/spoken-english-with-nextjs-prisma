@@ -77,7 +77,7 @@ const AddRuleForm: React.FC = () => {
 
         toast.dismiss(toastId);
       }
-      console.log("Success:", data);
+      // console.log("Success:", data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -98,12 +98,17 @@ const AddRuleForm: React.FC = () => {
           id="category"
           className="form-select mt-1 block w-full rounded-md border border-gray-800 p-2"
         >
-          <option value="question">Question</option>
           <option value="all">All</option>
+          <option value="question">Question</option>
           <option value="modal verb">Modal verb</option>
           <option value="use of wh words">Use of wh words</option>
           <option value="preposition">Preposition</option>
           <option value="introductory there">Introductory There</option>
+          <option value="introductory it">Introductory It</option>
+          <option value="relative pronoun">Relative Pronoun</option>
+          <option value="phrase">Phrase</option>
+          <option value="rules">Rules</option>
+          <option value="imperative sentence">Imperative Sentence</option>
         </select>
       </div>
 

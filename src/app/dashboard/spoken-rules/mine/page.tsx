@@ -8,7 +8,7 @@ import React from "react";
 async function MySpokenRules() {
   const session = await getServerSession(authOptions);
   const user: User = session?.user;
-  console.log(user);
+  // console.log(user);
   /* 
   const rules = await prisma.spokenRule.findMany({
     where: {
@@ -30,7 +30,7 @@ async function MySpokenRules() {
       createdAt: "desc", // Use 'desc' if you want to sort in descending order
     },
   });
-  console.log(rules);
+  // console.log(rules);
   return (
     <div className="container mx-auto p-4">
       <div>{rules.length}</div>

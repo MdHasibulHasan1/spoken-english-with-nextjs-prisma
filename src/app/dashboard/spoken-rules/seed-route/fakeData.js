@@ -1,45 +1,51 @@
 const rule = {
-  category:
-    "Using 'Against + Possessive Pronoun + Noun' (কারো কোন কিছুর বিরুদ্ধে অর্থে)",
-  structure: "Against + Possessive Pronoun + Noun",
+  category: "Commands to Initiate Actions",
+  structure: "Start + verb-ing",
+  note: "'Start + verb-ing' ব্যবহার করা হয় কাউকে কোন কিছু শুরু করতে বলার জন্য।",
   examples: [
     {
-      english: "Against my will.",
-      bangla: "আমার ইচ্ছার বিরুদ্ধে।",
+      english: "Start running.",
+      bangla: "দৌড়ানো শুরু কর।",
     },
     {
-      english: "Against his decision-making.",
-      bangla: "তার সিদ্ধান্ত নেওয়ার বিরুদ্ধে।",
+      english: "Don't start running.",
+      bangla: "দৌড়ানো শুরু করো না।",
     },
     {
-      english: "Against your suggestion.",
-      bangla: "তোমার পরামর্শের বিরুদ্ধে।",
+      english: "Start learning.",
+      bangla: "শেখা শুরু কর।",
     },
     {
-      english: "Against my decision.",
-      bangla: "আমার সিদ্ধান্তের বিরুদ্ধে।",
+      english: "Don't start learning.",
+      bangla: "শেখা শুরু করো না।",
     },
     {
-      english: "Against her wishes.",
-      bangla: "তার ইচ্ছার বিরুদ্ধে।",
+      english: "Start writing.",
+      bangla: "লেখা শুরু কর।",
     },
     {
-      english: "Against his advice.",
-      bangla: "তার পরামর্শের বিরুদ্ধে।",
+      english: "Don't start writing.",
+      bangla: "লেখা শুরু করো না।",
     },
     {
-      english: "They often vote against our proposal.",
-      bangla: "তারা প্রায়ই আমাদের প্রস্তাবের বিরুদ্ধে ভোট দেয়।",
+      english: "Start reading.",
+      bangla: "পড়া শুরু কর।",
     },
     {
-      english: "I will speak against your opinion in the meeting.",
-      bangla: "আমি মিটিংয়ে তোমার মতামতের বিরুদ্ধে কথা বলব।",
+      english: "Don't start reading.",
+      bangla: "পড়া শুরু করো না।",
     },
     {
-      english: "The results will go against our expectations.",
-      bangla: "ফলাফল আমাদের প্রত্যাশার বিরুদ্ধে যাবে।",
+      english: "Start speaking.",
+      bangla: "কথা বলা শুরু কর।",
+    },
+    {
+      english: "Don't start speaking.",
+      bangla: "কথা বলা শুরু করো না।",
     },
   ],
 };
+
+console.log(rule);
 
 export default rule;
