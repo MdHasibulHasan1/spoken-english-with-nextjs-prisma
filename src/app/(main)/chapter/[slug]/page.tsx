@@ -19,16 +19,8 @@ async function Chapter({ params }: { params: Params }) {
       );
     }
 
-    const {
-      bloggerEmail,
-      category,
-      slug,
-      title,
-      content,
-      image,
-      createdAt,
-      updatedAt,
-    } = chapter;
+    const { category, slug, title, content, image, createdAt, updatedAt } =
+      chapter;
 
     // Function to format date as "Month Day, Year"
     const formatDate = (dateString) => {
