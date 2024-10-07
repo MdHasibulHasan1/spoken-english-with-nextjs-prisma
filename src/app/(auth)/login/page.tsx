@@ -1,4 +1,4 @@
-import { login } from "@/actions/user";
+// import { login } from "@/actions/user";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -6,7 +6,8 @@ import { redirect } from "next/navigation";
 const Login = async () => {
   return (
     <div className="mt-10 max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white border border-[#121212] dark:bg-black">
-      <form className="my-8" action={login}>
+      <form className="my-8">
+        {/*  <form className="my-8" action={login}> */}
         <label
           htmlFor="email"
           className="block text-sm font-medium text-gray-700"
@@ -43,7 +44,7 @@ const Login = async () => {
         </button>
 
         <p className="text-right text-neutral-600 text-sm max-w-sm mt-4 dark:text-neutral-300">
-          Don't have an account? <Link href="/register">Register</Link>
+          Don&apos;t have an account? <Link href="/register">Register</Link>
         </p>
 
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />

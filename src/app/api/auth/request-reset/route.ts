@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 import { prisma } from "@/lib/db/prisma";
 import { ApiResponse } from "@/types/ApiResponse";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   const { email } = await req.json();
 
   // Validation: Check if any of the required fields are empty

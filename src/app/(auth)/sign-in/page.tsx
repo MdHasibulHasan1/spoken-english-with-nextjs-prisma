@@ -93,7 +93,7 @@ export default function SignIn() {
               className="text-indigo-600 hover:text-indigo-500"
               href="/sign-up"
             >
-              Don't have an account? Sign Up
+              Don&apos;t have an account? Sign Up
             </Link>
           </div>
           <div className="flex justify-center mt-6">

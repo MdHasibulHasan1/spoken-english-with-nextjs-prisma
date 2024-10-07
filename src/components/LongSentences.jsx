@@ -5,7 +5,7 @@ const LongSentences = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold text-center mb-8">
-        Sentences with "to + verb" Structure
+        Sentences with &quot;to + verb&quot; Structure
       </h1>
 
       <div className="mb-8 p-6 bg-white rounded-lg shadow-md">

@@ -1,55 +1,59 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db/prisma";
+import { ApiResponse } from "@/types/ApiResponse";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method === "POST") {
+export async function POST(req: NextRequest) {
+  try {
     const {
       searchTerm = "",
       sort = "desc",
       category = "preposition",
       startIndex = 0,
-    } = req.body;
+    } = await req.json();
 
-    try {
-      const posts = await prisma.chapter.findMany({
-        where: {
-          AND: [
-            {
-              OR: [
-                {
-                  title: {
-                    contains: searchTerm as string,
-                    mode: "insensitive",
-                  },
+    // Fetch posts with the specified filters
+    const posts = await prisma.chapter.findMany({
+      where: {
+        AND: [
+          {
+            OR: [
+              {
+                title: {
+                  contains: searchTerm as string,
+                  mode: "insensitive", // Case-insensitive search
                 },
-                {
-                  content: {
-                    contains: searchTerm as string,
-                    mode: "insensitive",
-                  },
+              },
+              {
+                content: {
+                  contains: searchTerm as string,
+                  mode: "insensitive",
                 },
-              ],
-            },
-            { category: { equals: category as string } },
-          ],
-        },
-        orderBy: { createdAt: sort as "asc" | "desc" },
-        skip: Number(startIndex),
-        take: 9, // Change this to the desired page size
-      });
+              },
+            ],
+          },
+          { category: { equals: category as string } }, // Filter by category
+        ],
+      },
+      orderBy: { createdAt: sort as "asc" | "desc" }, // Sort by createdAt
+      skip: Number(startIndex),
+      take: 9, // Page size
+    });
 
-      res.status(200).json({ posts });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Internal Server Error", error: error.message });
-    }
-  } else {
-    // Method not allowed
-    res.setHeader("Allow", ["POST"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    // Success response
+    const successResponse: ApiResponse = {
+      success: true,
+      message: "Posts fetched successfully",
+      payload: { posts },
+    };
+
+    return NextResponse.json(successResponse, { status: 200 });
+  } catch (error) {
+    // Handle internal server errors
+    const errorResponse: ApiResponse = {
+      success: false,
+      message: "Internal Server Error",
+      payload: { error: error.message },
+    };
+    return NextResponse.json(errorResponse, { status: 500 });
   }
 }

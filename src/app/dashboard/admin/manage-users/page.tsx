@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent, useCallback } from "react";
 import axios from "axios";
 import { User } from "@/types/types";
 import SectionTitle from "@/components/SectionTitle";
@@ -13,25 +13,15 @@ const ManageUsers = () => {
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [totalUsers, setTotalUsers] = useState<number>(0);
-  const [editingUserId, setEditingUserId] = useState<string>("");
+  const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [newRole, setNewRole] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    fetchUsers();
-  }, [search, sort, order, page, limit]);
-
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axios.get("/api/admin/manage-users", {
-        params: {
-          search,
-          sort,
-          order,
-          page,
-          limit,
-        },
+        params: { search, sort, order, page, limit },
       });
       const { users, totalUsers } = response.data.payload;
       setUsers(users);
@@ -41,7 +31,11 @@ const ManageUsers = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, sort, order, page, limit]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   const handleRoleUpdate = async (id: string, role: string) => {
     try {
@@ -165,10 +159,10 @@ const ManageUsers = () => {
                         </button>
                         <button
                           onClick={() => {
-                            setEditingUserId("");
+                            setEditingUserId(null);
                             setNewRole("");
                           }}
-                          className="bg-red-500 text-white  rounded"
+                          className="bg-red-500 text-white rounded"
                         >
                           Cancel
                         </button>

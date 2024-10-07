@@ -3,7 +3,7 @@ import Loader from "@/components/Loader";
 import SectionTitle from "@/components/SectionTitle";
 import { Rule } from "@/types/types";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react"; // Import useCallback
 import toast from "react-hot-toast";
 
 const ManageRules: React.FC = () => {
@@ -12,13 +12,13 @@ const ManageRules: React.FC = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
-  const [totalRecords, setTotalRecords] = useState(0); // New state for total records
+  const [totalRecords, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sortField, setSortField] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState("desc");
 
-  const fetchRules = async () => {
+  const fetchRules = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -29,7 +29,7 @@ const ManageRules: React.FC = () => {
       if (data.success) {
         setRules(data.data);
         setTotalPages(data.totalPages);
-        setTotalRecords(data.totalRecords); // Set total records
+        setTotalRecords(data.totalRecords);
       } else {
         setError(data.message || "Failed to fetch rules.");
       }
@@ -38,7 +38,15 @@ const ManageRules: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, page, limit, sortField, sortOrder]); // Add dependencies
+
+  useEffect(() => {
+    const debounceFetch = setTimeout(() => {
+      fetchRules();
+    }, 500); // Debounce time in milliseconds
+
+    return () => clearTimeout(debounceFetch);
+  }, [fetchRules]); // Only depend on fetchRules
 
   const updateStatus = async (id: string, status: string) => {
     const toastId = toast.loading("Loading...");
@@ -55,9 +63,10 @@ const ManageRules: React.FC = () => {
 
       if (data.success) {
         toast.success(data.message);
-        // Update the status locally to avoid fetching again
         setRules(
-          rules.map((rule) => (rule.id === id ? { ...rule, status } : rule))
+          rules.map((rule: any) =>
+            rule.id === id ? { ...rule, status } : rule
+          )
         );
       } else {
         toast.error(data.message || "An error occurred.");
@@ -69,22 +78,14 @@ const ManageRules: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const debounceFetch = setTimeout(() => {
-      fetchRules();
-    }, 500); // Debounce time in milliseconds
-
-    return () => clearTimeout(debounceFetch);
-  }, [search, page, limit, sortField, sortOrder]);
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    setPage(1); // Reset to the first page on new search
+    setPage(1);
   };
 
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLimit(parseInt(e.target.value, 10));
-    setPage(1); // Reset to the first page on limit change
+    setPage(1);
   };
 
   const handleSortChange = (field: string) => {
@@ -121,7 +122,7 @@ const ManageRules: React.FC = () => {
       ) : (
         <>
           <div className="mb-4 text-lg font-bold flex gap-1">
-            <span> {totalRecords} items found</span>
+            <span>{totalRecords} items found</span>
             {search && (
               <div>
                 <span>for</span>

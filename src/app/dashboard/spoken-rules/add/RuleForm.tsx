@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-
 import { useRouter } from "next/navigation";
 import { Rule, Example } from "@/types/types";
 import { MdAddCircleOutline } from "react-icons/md";
@@ -80,7 +79,7 @@ const AddRuleForm: React.FC = () => {
         setIsLoading(false);
       }
 
-      console.log("Success:", rule);
+      // console.log("Success:", rule);
 
       /*  setFormData({
         ...formData,

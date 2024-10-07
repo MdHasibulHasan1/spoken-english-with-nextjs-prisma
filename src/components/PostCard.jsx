@@ -14,11 +14,11 @@ export default function PostCard({
   return (
     <div className="group relative w-full border border-teal-500 hover:border-2 h-[400px] overflow-hidden rounded-lg sm:w-[430px] transition-all">
       <Link href={`/chapter/${slug}`}>
-        <img
+        {/* <img
           src={image}
           alt="post cover"
           className="h-[260px] w-full  object-cover group-hover:h-[200px] transition-all duration-300 z-20"
-        />
+        /> */}
       </Link>
       {/* {image && (
         <div className="mb-6">

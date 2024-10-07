@@ -1,11 +1,6 @@
-import type { Metadata } from "next";
-import { Inter, Ubuntu } from "next/font/google";
+import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar/Navbar";
 const inter = Inter({ subsets: ["latin"] });
-const ubuntu = Ubuntu({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"], // Pass an array of weight values
-});
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",

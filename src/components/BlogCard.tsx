@@ -46,13 +46,13 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
               <tr>
                 <td>
                   <div className="flex gap-2 items-center">
-                    <img
+                    {/* <img
                       className="w-12 rounded-full object-cover"
                       src={
                         user.photoURL || "https://i.ibb.co/Sw3NrxS/727399.png"
                       }
                       alt="not found"
-                    />
+                    /> */}
                     <h2 className="text-xl font-semibold">
                       {user.displayName || "Easy spoken with structure"}
                     </h2>

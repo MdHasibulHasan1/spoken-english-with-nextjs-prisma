@@ -4,13 +4,24 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { IoMdAdd } from "react-icons/io";
-import { MdAddCircleOutline, MdDeleteForever } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { MdAddCircleOutline } from "react-icons/md";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { prepositionSchema } from "@/schemas/prepositionSchemas";
 import { z } from "zod";
+
+// Define the preposition schema
+const prepositionSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  expressions: z.array(z.string().min(1, "Expression is required")),
+  usages: z.array(
+    z.object({
+      description: z.string().min(1, "Description is required"),
+      examples: z.array(z.string().min(1, "Example is required")),
+    })
+  ),
+  id: z.string(),
+});
 
 type FormData = z.infer<typeof prepositionSchema>;
 
@@ -19,7 +30,7 @@ const PrepositionsForm: React.FC<FormData> = ({
   title,
   usages,
   id,
-}: FormData) => {
+}) => {
   const {
     register,
     handleSubmit,
@@ -212,29 +223,26 @@ const PrepositionsForm: React.FC<FormData> = ({
         <button
           type="button"
           onClick={() => appendUsage({ description: "", examples: [""] })}
-          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full flex items-center justify-center shadow-md"
+          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full flex items-center gap-2"
         >
-          <MdAddCircleOutline size={24} className="mr-2" />
           Add Usage
         </button>
       </div>
-      <div className="flex justify-between items-center mt-6">
-        <button
-          type="submit"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-3/4"
-        >
-          Update
-        </button>
-        <button
-          type="button"
-          onClick={deletePreposition}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/5 flex items-center justify-center"
-        >
-          <RiDeleteBinLine className="mr-2" size={20} />
-          Delete
-        </button>
-      </div>
-      <p className="text-red-500 p-2 rounded-md">{message}</p>
+
+      <button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Update Preposition
+      </button>
+
+      <button
+        type="button"
+        onClick={deletePreposition}
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
+      >
+        Delete Preposition
+      </button>
     </form>
   );
 };
