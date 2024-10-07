@@ -23,7 +23,7 @@ async function Chapter({ params }: { params: Params }) {
       chapter;
 
     // Function to format date as "Month Day, Year"
-    const formatDate = (dateString) => {
+    const formatDate = (dateString: any) => {
       const options = { year: "numeric", month: "long", day: "numeric" };
       return new Date(dateString).toLocaleDateString(undefined, options);
     };
