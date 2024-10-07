@@ -11,7 +11,7 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [image, setImage] = useState("");
   const router = useRouter();
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const toastId = toast.loading("Loading...");
     if (password !== confirmPassword) {
