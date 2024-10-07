@@ -22,7 +22,7 @@ export const login = async (formData: FormData) => {
 
     redirect("/");
   } catch (error) {
-    return { error: error?.message };
+    return { error: error };
   }
 };
 
