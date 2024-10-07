@@ -18,7 +18,7 @@ export interface Example {
 }
 
 export interface Rule {
-  serialNumber?: number | null;
+  serialNumber?: number | null | undefined;
   structure: string;
   note?: string;
   examples: Example[];
@@ -27,4 +27,5 @@ export interface Rule {
   updatedAt?: Date;
   status?: string;
   userId: string | undefined;
+  id?: string;
 }

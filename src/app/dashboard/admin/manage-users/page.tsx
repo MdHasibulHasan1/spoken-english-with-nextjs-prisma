@@ -143,7 +143,9 @@ const ManageUsers = () => {
                       : "Not Verified"}
                   </td>
                   <td className="py-2 px-4 border-b">
-                    {new Date(user?.createdAt).toLocaleDateString("en-GB")}
+                    {new Date(user?.createdAt ?? new Date()).toLocaleDateString(
+                      "en-GB"
+                    )}
                   </td>
                   <td className="py-2 px-4 border-b">
                     {new Date(user.updatedAt).toLocaleDateString("en-GB")}

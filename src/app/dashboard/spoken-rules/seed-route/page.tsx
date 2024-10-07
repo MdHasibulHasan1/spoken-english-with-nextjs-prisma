@@ -1,21 +1,31 @@
 "use client";
-import React, { useState } from "react";
-
+import React, { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Rule, Example } from "@/types/types";
 import { MdAddCircleOutline } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
-import rule from "./fakeData";
+import rule from "./fakeData"; // Assuming fakeData is imported correctly
 import toast from "react-hot-toast";
 
 const AddRuleForm: React.FC = () => {
   const router = useRouter();
 
-  const [formData, setFormData] = useState<Rule>(rule);
+  // Set the initial state from the fakeData
+  const [formData, setFormData] = useState<Rule>({
+    category: rule.category,
+    structure: rule.structure,
+    note: rule.note,
+    examples: rule.examples,
+    userId: "", // Set the userId, you can replace "" with the actual userId if available
+  });
+
   const [isLoading, setIsLoading] = useState(false);
 
+  // Handle input changes for text areas and inputs
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = event.target;
     setFormData({
@@ -24,6 +34,7 @@ const AddRuleForm: React.FC = () => {
     });
   };
 
+  // Handle input changes for examples array
   const handleExampleChange = (
     index: number,
     event: React.ChangeEvent<HTMLInputElement>
@@ -37,6 +48,7 @@ const AddRuleForm: React.FC = () => {
     });
   };
 
+  // Add a new example entry
   const addExample = () => {
     setFormData({
       ...formData,
@@ -44,18 +56,22 @@ const AddRuleForm: React.FC = () => {
     });
   };
 
+  // Remove an example entry
   const removeExample = (index: number) => {
     const updatedExamples = [...formData.examples];
-    updatedExamples.splice(index, 1);
+    updatedExamples.splice(index, 1); // Remove the example at the given index
     setFormData({
       ...formData,
       examples: updatedExamples,
     });
   };
 
+  // Form submission handler
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const toastId = toast.loading("Loading...");
+    const toastId = toast.loading("Loading..."); // Show loading toast
+    setIsLoading(true); // Set loading state
+
     try {
       const res = await fetch("/api/spoken-rules", {
         method: "POST",
@@ -63,30 +79,30 @@ const AddRuleForm: React.FC = () => {
         body: JSON.stringify(formData),
       });
 
-      /*   if (!res.ok) {
-        throw new Error("Failed to save conjunction");
-      } */
-
       const data = await res.json();
       if (data.success) {
-        toast.success(data.message);
-
-        toast.dismiss(toastId);
+        toast.success(data.message); // Success toast
+        toast.dismiss(toastId); // Dismiss loading toast
+        setIsLoading(false);
+        router.push("/"); // Redirect after success (if needed)
       } else {
-        toast.error(data.message);
-
-        toast.dismiss(toastId);
+        toast.error(data.message); // Error toast
+        toast.dismiss(toastId); // Dismiss loading toast
+        setIsLoading(false);
       }
-      // console.log("Success:", data);
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Failed to submit the rule!"); // Error toast
+      toast.dismiss(toastId); // Dismiss loading toast
+      setIsLoading(false);
     }
   };
+
   return (
     <form
       onSubmit={handleSubmit}
       className="md:w-8/12 mx-auto p-4 rounded-lg bg-white"
     >
+      {/* Category Selection */}
       <div className="mb-4">
         <label htmlFor="category" className="block font-medium text-gray-700">
           Category
@@ -112,6 +128,7 @@ const AddRuleForm: React.FC = () => {
         </select>
       </div>
 
+      {/* Structure Input */}
       <div className="mb-4">
         <label
           htmlFor="structure"
@@ -128,6 +145,7 @@ const AddRuleForm: React.FC = () => {
         />
       </div>
 
+      {/* Note Input */}
       <div className="mb-4">
         <label htmlFor="note" className="block mb-2 font-medium text-gray-700">
           Note
@@ -141,6 +159,7 @@ const AddRuleForm: React.FC = () => {
         />
       </div>
 
+      {/* Examples Input */}
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Examples:
@@ -166,7 +185,7 @@ const AddRuleForm: React.FC = () => {
             <button
               type="button"
               onClick={() => removeExample(index)}
-              className=" font-bold rounded focus:outline-none focus:shadow-outline"
+              className="font-bold rounded focus:outline-none focus:shadow-outline"
             >
               <RiDeleteBinLine size={24} color="red" />
             </button>
@@ -179,12 +198,14 @@ const AddRuleForm: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* Submit Button */}
       <button
         type="submit"
         disabled={isLoading}
         className="px-4 py-2 w-full disabled:cursor-not-allowed disabled:opacity-50 text-white bg-blue-500 rounded hover:bg-blue-600"
       >
-        {isLoading ? "Adding..." : "Add Blog"}
+        {isLoading ? "Adding..." : "Add Rule"}
       </button>
     </form>
   );

@@ -11,12 +11,15 @@ export async function POST(req: Request) {
     const { conjunction, explanation, examples } = await req.json();
     const session = await getServerSession(authOptions);
     const user: User = session?.user;
-    if (!session || !user) {
-      return Response.json(
-        { success: false, message: "Not authenticated" },
+
+    // Ensure the user is authenticated and has a valid id
+    if (!session || !user || !user.id) {
+      return NextResponse.json(
+        { success: false, message: "Not authenticated or missing user ID" },
         { status: 401 }
       );
     }
+
     // Validation: Check if any of the fields are empty
     if (
       !conjunction ||
@@ -36,12 +39,13 @@ export async function POST(req: Request) {
       (example) => !(example?.english === "" && example?.bangla === "")
     );
 
+    // Create the new conjunction in the database, userId is guaranteed to be a string
     const newConjunction = await prisma.conjunction.create({
       data: {
         conjunction,
         explanation,
         examples: filteredExamples,
-        userId: user?.id,
+        userId: user.id, // Remove the optional chaining here to ensure a valid string
       },
     });
 
@@ -51,7 +55,7 @@ export async function POST(req: Request) {
       payload: newConjunction,
     };
     return NextResponse.json(successResponse, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error creating conjunction:", error);
     const errorResponse: ApiResponse = {
       success: false,

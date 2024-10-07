@@ -48,12 +48,17 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(successResponse, { status: 200 });
   } catch (error) {
+    // Type-safe way to check if 'error' is an instance of 'Error'
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
+
     // Handle internal server errors
     const errorResponse: ApiResponse = {
       success: false,
       message: "Internal Server Error",
-      payload: { error: error.message },
+      payload: { error: errorMessage },
     };
+
     return NextResponse.json(errorResponse, { status: 500 });
   }
 }

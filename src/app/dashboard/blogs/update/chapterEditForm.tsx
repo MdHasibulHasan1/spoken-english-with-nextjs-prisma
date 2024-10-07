@@ -23,7 +23,7 @@ interface FormData {
   content?: string;
 }
 
-const ChapterEditForm = ({ chapter }) => {
+const ChapterEditForm = ({ chapter }: { chapter: any }) => {
   const [file, setFile] = useState<File | null>(null);
   const [imageUploadProgress, setImageUploadProgress] = useState<number | null>(
     null

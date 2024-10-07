@@ -1,13 +1,22 @@
 "use client";
 import Loader from "@/components/Loader";
 import SectionTitle from "@/components/SectionTitle";
-import { Rule } from "@/types/types";
+// import { Rule } from "@/types/types";
 import Link from "next/link";
 import React, { useState, useEffect, useCallback } from "react"; // Import useCallback
 import toast from "react-hot-toast";
+interface Rule {
+  id: string;
+  category: string;
+  structure: string;
+  createdAt: string;
+  updatedAt: string;
+  status: string;
+}
 
 const ManageRules: React.FC = () => {
   const [rules, setRules] = useState<Rule[]>([]);
+
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -64,7 +73,7 @@ const ManageRules: React.FC = () => {
       if (data.success) {
         toast.success(data.message);
         setRules(
-          rules.map((rule: any) =>
+          rules.map((rule: Rule) =>
             rule.id === id ? { ...rule, status } : rule
           )
         );

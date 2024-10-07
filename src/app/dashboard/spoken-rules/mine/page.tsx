@@ -53,7 +53,7 @@ async function MySpokenRules() {
                 {/* {rule.bloggerName || "Anonymous"} */}
                 Anonymous
               </h2>
-              <p className="text-sm text-gray-500">{rule?.bloggerEmail}</p>
+              {/* <p className="text-sm text-gray-500">{rule?.bloggerEmail}</p> */}
             </div>
           </div>
           <h3 className="text-xl font-semibold mb-2">

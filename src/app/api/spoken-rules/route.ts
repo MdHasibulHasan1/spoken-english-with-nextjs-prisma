@@ -4,7 +4,7 @@ import { ApiResponse } from "@/types/ApiResponse";
 import { User } from "next-auth";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]/options";
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/db/prisma";
 
 export async function GET(req: Request) {
   try {
@@ -18,43 +18,50 @@ export async function GET(req: Request) {
     );
   }
 }
-
 export async function POST(req: Request) {
   try {
     const { category, structure, note, examples } = await req.json();
     console.log(category, structure, note, examples);
     const session = await getServerSession(authOptions);
     const _user: User = session?.user;
+
+    // Return 401 if the session or user is not found
     if (!session || !_user) {
-      return Response.json(
+      return NextResponse.json(
         { success: false, message: "Not authenticated" },
         { status: 401 }
       );
     }
-    // Validation: Check if any of the fields are empty
+
+    // Validation: Check if any of the required fields are missing
     if (!structure || !Array.isArray(examples) || !category) {
       const response: ApiResponse = {
         success: false,
-        message: "Missing required fields(structure, examples, category).",
+        message: "Missing required fields (structure, examples, category).",
       };
       return NextResponse.json(response, { status: 400 });
     }
 
+    // Filter out empty examples
     const filteredExamples = examples.filter(
       (example) => !(example?.english === "" && example?.bangla === "")
     );
+
+    // Ensure userId is only passed when it’s a valid string
     const createdRule = await prisma.spokenRule.create({
       data: {
         structure,
         note,
         examples: filteredExamples,
         category,
-        userId: _user.id,
+        userId: _user?.id || "", // Ensure valid userId
       },
     });
+
+    // Success response
     const successResponse: ApiResponse = {
       success: true,
-      message: "Your rule is added successfully",
+      message: "Your rule has been added successfully.",
       payload: createdRule,
     };
 

@@ -54,8 +54,9 @@ async function MyChapters() {
           </div>
           <p>
             <strong>Created At:</strong>{" "}
-            {new Date(p?.createdAt).toLocaleString()}
+            {p?.createdAt ? new Date(p.createdAt).toLocaleString() : "N/A"}
           </p>
+
           <p>
             <strong>Updated At:</strong>{" "}
             {new Date(p?.updatedAt).toLocaleString()}

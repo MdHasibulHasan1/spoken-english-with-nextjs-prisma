@@ -17,14 +17,17 @@ const AddRuleForm: React.FC = () => {
     structure: "",
     note: "",
     examples: [{ english: "", bangla: "" }],
-    category: "All",
+    category: "all",
     userId: user?.id,
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = event.target;
     setFormData({
@@ -69,28 +72,16 @@ const AddRuleForm: React.FC = () => {
     try {
       const rule = await addRule(formData);
       if (rule?.success) {
-        toast.success(rule?.message);
+        toast.success(rule?.message || "Operation successful!");
         toast.dismiss(toastId);
         setIsLoading(false);
       } else {
-        toast.error(rule?.message);
+        toast.error(rule?.message || "Operation failed!");
         toast.dismiss(toastId);
-
         setIsLoading(false);
       }
-
-      // console.log("Success:", rule);
-
-      /*  setFormData({
-        ...formData,
-        structure: "",
-        note: "",
-        examples: [{ english: "", bangla: "" }],
-        category: "question",
-      }); */
-      // router.push("/");
     } catch (error) {
-      console.error("Error adding blog:", error);
+      console.error("Error adding rule:", error);
       setIsLoading(false);
     }
   };
@@ -192,12 +183,13 @@ const AddRuleForm: React.FC = () => {
           </button>
         </div>
       </div>
+
       <button
         type="submit"
         disabled={isLoading}
         className="px-4 py-2 w-full disabled:cursor-not-allowed disabled:opacity-50 text-white bg-blue-500 rounded hover:bg-blue-600"
       >
-        {isLoading ? "Adding..." : "Add Blog"}
+        {isLoading ? "Adding..." : "Add Rule"}
       </button>
     </form>
   );

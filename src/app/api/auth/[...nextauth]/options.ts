@@ -74,6 +74,8 @@ export const authOptions: NextAuthOptions = {
           id: profile.id.toString(),
           image: profile.avatar_url,
           role: profile.role ?? "USER",
+          name: profile.name ?? "", // Provide fallback for name
+          email: profile.email ?? undefined, // Handle email as well
         };
       },
     }),

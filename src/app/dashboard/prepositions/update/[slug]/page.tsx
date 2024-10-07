@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/db/prisma";
 import React from "react";
-import PrepositionsForm from "../PrepositionsForm";
+// import PrepositionsForm from "../PrepositionsForm";
 
 async function UpdatePreposition({ params }: { params: { slug: string } }) {
   const prepositionId = parseInt(params.slug, 10);
@@ -22,8 +22,7 @@ async function UpdatePreposition({ params }: { params: { slug: string } }) {
 
     return (
       <div className="w-full">
-        {" "}
-        <PrepositionsForm key={preposition?.id} {...preposition} />{" "}
+        {/* <PrepositionsForm key={preposition?.id} {...preposition} /> */}
       </div>
     );
   } catch (error) {

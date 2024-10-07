@@ -21,7 +21,6 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json(successResponse, { status: 200 });
 }
-
 export async function PUT(req: NextRequest) {
   try {
     // const { newUserId } = await req.json();
@@ -49,11 +48,14 @@ export async function PUT(req: NextRequest) {
     };
 
     return NextResponse.json(successResponse, { status: 200 });
-  } catch (error) {
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
+
     const errorResponse: ApiResponse = {
       success: false,
       message: "An error occurred while updating spoken rules",
-      payload: { error: error.message },
+      payload: { error: errorMessage },
     };
 
     return NextResponse.json(errorResponse, { status: 500 });

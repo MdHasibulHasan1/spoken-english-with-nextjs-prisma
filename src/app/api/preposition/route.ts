@@ -1,32 +1,21 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { z } from "zod";
 import { ApiResponse } from "@/types/ApiResponse";
-import { prepositionSchema } from "@/schemas/prepositionSchemas";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/db/prisma";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const validation = prepositionSchema.safeParse(body);
 
-    if (!validation.success) {
-      const errorResponse: ApiResponse = {
-        success: false,
-        message: "Validation error",
-        payload: validation.error.errors,
-      };
-      return NextResponse.json(errorResponse, { status: 400 });
-    }
-
-    const { expressions, title, usages } = validation.data;
+    // Destructure data from the body
+    const { expressions, title, usages, author } = body;
 
     const newPreposition = await prisma.preposition.create({
       data: {
         expressions,
         title,
         usages,
+        author, // Include author if necessary
         createdAt: new Date(),
       },
     });

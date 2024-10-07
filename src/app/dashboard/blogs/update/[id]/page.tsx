@@ -33,7 +33,7 @@ function UpdateChapter({ params }: { params: { id: string } }) {
     return <div>Not found.</div>;
   }
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error?.message}</p>;
+  if (error) return <p>Error: {(error as Error)?.message}</p>;
 
   const deletePreposition = async () => {
     try {
