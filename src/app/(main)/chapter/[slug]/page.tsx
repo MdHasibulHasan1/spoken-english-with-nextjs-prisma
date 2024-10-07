@@ -24,7 +24,11 @@ async function Chapter({ params }: { params: Params }) {
 
     // Function to format date as "Month Day, Year"
     const formatDate = (dateString: any) => {
-      const options = { year: "numeric", month: "long", day: "numeric" };
+      const options: Intl.DateTimeFormatOptions = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
       return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
@@ -39,14 +43,14 @@ async function Chapter({ params }: { params: Params }) {
               {title}
             </h1>
             <h4 className="text-center mb-3 font-bold flex gap-4 justify-center">
-              <span>by {bloggerEmail}</span> |{" "}
+              {/* <span>by {bloggerEmail}</span> |{" "} */}
               <span>{formatDate(createdAt)}</span>
             </h4>
             {image && (
               <div className="mb-6">
                 <Image
                   src={image}
-                  alt={title}
+                  alt="Not found your image."
                   width={800}
                   height={500}
                   className="rounded-lg w-full object-cover h-64 sm:h-80 lg:h-96"
@@ -60,7 +64,7 @@ async function Chapter({ params }: { params: Params }) {
               </div>
               <div className="flex items-center">
                 <span className="font-semibold w-28">Author:</span>
-                <span>{bloggerEmail}</span>
+                {/* <span>{bloggerEmail}</span> */}
               </div>
               <div className="flex items-center">
                 <span className="font-semibold w-28">Created at:</span>
