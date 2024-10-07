@@ -1,8 +1,11 @@
 import { prisma } from "@/lib/db/prisma";
 import Image from "next/image";
 import React from "react";
-
-async function Chapter({ params }) {
+// Define the type for params
+interface Params {
+  slug: string;
+}
+async function Chapter({ params }: { params: Params }) {
   const chapterSlug = params.slug;
 
   try {
