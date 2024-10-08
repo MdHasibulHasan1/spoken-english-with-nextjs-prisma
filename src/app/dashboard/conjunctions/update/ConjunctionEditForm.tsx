@@ -5,7 +5,6 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import toast from "react-hot-toast";
 import { MdAddCircleOutline } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
-
 interface Example {
   english: string;
   bangla: string;
@@ -16,16 +15,16 @@ interface FormData {
   explanation: string;
   examples: Example[];
   id?: string;
-  serialNumber?: number;
+  serialNumber?: number | null; // Adjusted to match the original type
 }
 
-const ConjunctionEditForm: React.FC = ({
+const ConjunctionEditForm: React.FC<FormData> = ({
   conjunction,
   explanation,
   examples,
   id,
   serialNumber,
-}: FormData) => {
+}) => {
   const [formData, setFormData] = useState<FormData>({
     conjunction,
     explanation,
@@ -108,7 +107,7 @@ const ConjunctionEditForm: React.FC = ({
         <input
           type="number"
           name="serialNumber"
-          value={formData?.serialNumber}
+          value={formData?.serialNumber ?? 0} // Use the nullish coalescing operator
           onChange={handleInputChange}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />

@@ -17,20 +17,21 @@ interface FormData {
   expressions: string[];
   title: string;
   usages: PrepositionsUsages[];
+  id?: string; // Add `id` as an optional property if you intend to use it.
 }
-
-const PrepositionsForm: React.FC = ({
+const PrepositionsForm: React.FC<FormData> = ({
   expressions,
   title,
   usages,
   id,
-}: FormData) => {
+}) => {
   const [formData, setFormData] = useState<FormData>({
     expressions,
     title,
     usages,
     id,
   });
+
   const [message, setMessage] = useState("");
   const router = useRouter();
 
@@ -113,10 +114,15 @@ const PrepositionsForm: React.FC = ({
         setMessage(data.message);
       }
       console.log("Success:", data);
-    } catch (error) {
-      console.error("Error:", error);
+    } catch (error: unknown) {
       toast.dismiss(toastId);
-      toast.error(error.message || "Something went wrong. update failed.");
+      let errorMessage = "Something went wrong. Update failed.";
+
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      toast.error(errorMessage);
     }
   };
   const deletePreposition = async () => {

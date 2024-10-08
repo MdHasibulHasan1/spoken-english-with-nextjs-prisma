@@ -18,7 +18,7 @@ const AddRuleForm: React.FC = () => {
     note: "",
     examples: [{ english: "", bangla: "" }],
     category: "all",
-    userId: user?.id,
+    userId: user?.id || "",
   });
 
   const [isLoading, setIsLoading] = useState(false);

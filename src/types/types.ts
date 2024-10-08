@@ -16,16 +16,15 @@ export interface Example {
   english: string;
   bangla: string;
 }
-
 export interface Rule {
-  serialNumber?: number | null | undefined;
+  serialNumber?: number | null;
   structure: string;
-  note?: string;
+  note: string; // If this can be empty, keep it as string
   examples: Example[];
   category: string;
   createdAt?: Date;
   updatedAt?: Date;
   status?: string;
-  userId: string | undefined;
+  userId: string; // Make this required
   id?: string;
 }

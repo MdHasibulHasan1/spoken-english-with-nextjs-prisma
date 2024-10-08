@@ -114,7 +114,9 @@ const PrepositionsForm: React.FC = () => {
       console.error("Error:", error);
       setIsLoading(false);
       toast.dismiss(toastId);
-      toast.error(error?.message || "Something went wrong. update failed.");
+      toast.error(
+        (error as any).message || "Something went wrong. Update failed."
+      );
       // setMessage(error?.message || error);
     }
   };

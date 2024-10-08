@@ -48,8 +48,11 @@ async function MyConjunctions() {
 
           <p className="mt-2">
             <strong>Created At:</strong>{" "}
-            {new Date(conjunction?.createdAt).toLocaleString()}
+            {conjunction?.createdAt
+              ? new Date(conjunction.createdAt).toLocaleString()
+              : "N/A"}
           </p>
+
           <p className="mt-2">
             <strong>Updated At:</strong>{" "}
             {new Date(conjunction.updatedAt).toLocaleString()}

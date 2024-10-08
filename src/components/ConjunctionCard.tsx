@@ -1,6 +1,21 @@
 import React from "react";
 
-export default function ConjunctionCard({ conjunction }) {
+interface Example {
+  english: string;
+  bangla: string;
+}
+
+interface Conjunction {
+  conjunction: string;
+  explanation: string;
+  examples: Example[];
+}
+
+interface ConjunctionCardProps {
+  conjunction: Conjunction;
+}
+
+const ConjunctionCard: React.FC<ConjunctionCardProps> = ({ conjunction }) => {
   return (
     <div className="lg:w-8/12 w-full mx-auto mb-8 p-6 bg-purple-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-purple-200">
       <div className="mb-2">
@@ -29,4 +44,6 @@ export default function ConjunctionCard({ conjunction }) {
       </ul>
     </div>
   );
-}
+};
+
+export default ConjunctionCard;

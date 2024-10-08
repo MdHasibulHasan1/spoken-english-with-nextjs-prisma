@@ -1,9 +1,21 @@
-// components/PrepositionCard.js
 import React from "react";
 
-function PrepositionCard({ preposition }) {
-  console.log(preposition);
+interface Usage {
+  description: string;
+  examples: string[];
+}
 
+interface Preposition {
+  title: string;
+  usages?: Usage[]; // Marked usages as optional
+  expressions?: string[];
+}
+
+interface PrepositionCardProps {
+  preposition: Preposition;
+}
+
+const PrepositionCard: React.FC<PrepositionCardProps> = ({ preposition }) => {
   let content;
   if (preposition?.expressions) {
     if (preposition?.expressions.length > 1) {
@@ -62,8 +74,7 @@ function PrepositionCard({ preposition }) {
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white ">
-          {/* divide-y divide-gray-500 */}
+        <tbody className="bg-white">
           {preposition?.usages?.map((usage, idx) => (
             <tr
               key={idx}
@@ -92,6 +103,6 @@ function PrepositionCard({ preposition }) {
       <>{content}</>
     </div>
   );
-}
+};
 
 export default PrepositionCard;

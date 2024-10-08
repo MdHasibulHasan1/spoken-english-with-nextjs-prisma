@@ -1,5 +1,4 @@
 import React from "react";
-import prepositionData from "./data";
 import PrepositionCard from "@/components/PrepositionCard";
 import prepositionsData from "./data";
 import Link from "next/link";
