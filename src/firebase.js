@@ -13,7 +13,7 @@ import { initializeApp } from "firebase/app";
   appId: "1:580260438274:web:181d78bb0c4951d141a21b",
 }; */
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_APIKEY,
+  apiKey: process.env.VITE_APIKEY,
   authDomain: "mern-estate-6b4ae.firebaseapp.com",
   projectId: "mern-estate-6b4ae",
   storageBucket: "mern-estate-6b4ae.appspot.com",
