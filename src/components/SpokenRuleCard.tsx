@@ -67,14 +67,14 @@ const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
   };
 
   return (
-    <div className="mb-8 w-full max-w-md mx-auto p-6 bg-white rounded-xl shadow-lg transition-shadow duration-300 border border-gray-200">
-      <div className="flex flex-col md:flex-row items-start justify-between mb-4">
+    <div className="mb-8 p-2 w-full max-w-md mx-auto bg-white rounded-xl shadow-lg transition-shadow duration-300 border border-gray-200">
+      <div className="flex flex-col items-center md:flex-row justify-between mb-4">
         <div className="text-sm text-gray-600 mb-2 md:mb-0">
           Created by: <span className="font-semibold">{author.name}</span>
         </div>
         <div className="flex-shrink-0">
           <Link href={`/dashboard/spoken-rules/update/${id}`}>
-            <button className="flex items-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">
+            <button className=" rounded transition-colors duration-200">
               <FaEdit className="mr-2" /> {/* Icon for update */}
             </button>
           </Link>
@@ -93,43 +93,58 @@ const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
           </span>
         </div>
       </div>
-
-      <div ref={cardRef}>
-        <div className="mb-4">
-          <div className="relative flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-indigo-500">
-            <div className="flex flex-col items-center text-center p-4 bg-white rounded-lg font-bold text-purple-800 w-full">
-              <h2 className="text-lg">{structure}</h2>
+      {/* ----------------- */}
+      <div ref={cardRef} className="bg-gray-100 relative">
+        <div className="bg-white rounded-lg p-2 shadow-md mb-4 border-t-8 border-indigo-600 relative">
+          <div className="flex w-full justify-center">
+            <div className="bg-white rounded-lg p-2 w-full">
+              <h2 className="text-purple-700 text-center text-lg font-bold">
+                {structure}
+              </h2>
             </div>
           </div>
+
+          <ul className="mt-4 space-y-2">
+            {examples?.map((example: Example, idx: number) => (
+              <li
+                key={idx}
+                className="border-b border-gray-300 pb-2 last:border-b-0 transform transition-transform hover:scale-105"
+              >
+                <div className="bg-gray-200 p-2 rounded-md">
+                  <p className="text-gray-800 mb-1">
+                    <span className="font-bold">➤</span>
+                    <span className="text-gray-700">{example.english}</span>
+                  </p>
+                  <p className="text-gray-800">
+                    <span className="font-bold">⇒</span>
+                    <span className="text-gray-700">{example.bangla}</span>
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {note && (
+            <div className="mt-4 bg-yellow-100 p-4 rounded-lg border border-yellow-300 shadow-inner flex items-center space-x-2">
+              <MdNote className="text-yellow-600" size={24} />
+              <div className="text-sm text-gray-800">
+                <strong className="text-yellow-700">Note:</strong>{" "}
+                <span>{note}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Watermark below examples */}
+          <p className="absolute bottom-12 right-4 text-gray-400 text-4xl transform rotate-[-30deg] font-bold opacity-20">
+            English Elevate
+          </p>
+          <p className="absolute top-2/4 right-4 text-gray-400 text-4xl transform rotate-[-30deg] font-bold opacity-20">
+            English Elevate
+          </p>
+          <p className="absolute top-12 right-4 text-gray-400 text-4xl transform rotate-[-30deg] font-bold opacity-20">
+            English Elevate
+          </p>
         </div>
-
-        <ul className="space-y-4">
-          {examples?.map((example: Example, idx: string) => (
-            <li
-              key={idx}
-              className="border-b pb-4 last:border-b-0 transition-transform transform hover:scale-105"
-            >
-              <p className="text-gray-800 mb-1">
-                <strong className="text-gray-900">English:</strong>{" "}
-                <span className="text-gray-700">{example.english}</span>
-              </p>
-              <p className="text-gray-800">
-                <strong className="text-gray-900">Bangla:</strong>{" "}
-                <span className="text-gray-700">{example.bangla}</span>
-              </p>
-            </li>
-          ))}
-        </ul>
-
-        {note && (
-          <div className="mt-4 bg-gradient-to-r from-yellow-100 to-yellow-200 p-4 rounded-lg border border-yellow-300 shadow-inner flex items-center space-x-2">
-            <MdNote className="text-yellow-600" size={24} />
-            <div className="text-sm text-gray-800">
-              <strong className="text-yellow-700">Note:</strong>{" "}
-              <span>{note}</span>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* <div className="flex flex-col md:flex-row justify-center mt-6 space-y-2 md:space-y-0 md:space-x-2">
