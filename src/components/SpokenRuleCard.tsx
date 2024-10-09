@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { FaRegCopy, FaCheck, FaStar, FaRegStar } from "react-icons/fa";
 import { MdNote } from "react-icons/md";
-
+import { FaEdit } from "react-icons/fa"; // Make sure to import the icon you want to use
 interface SpokenRuleCardProps extends Rule {}
 
 const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
@@ -67,37 +67,43 @@ const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
   };
 
   return (
-    <div className="mb-8 w-10/12 mx-auto p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
-      <div className="flex items-center justify-between mb-4">
-        <div className="text-sm text-gray-600">Created by: {author.name}</div>
-        <div>
+    <div className="mb-8 w-full max-w-md mx-auto p-6 bg-white rounded-xl shadow-lg transition-shadow duration-300 border border-gray-200">
+      <div className="flex flex-col md:flex-row items-start justify-between mb-4">
+        <div className="text-sm text-gray-600 mb-2 md:mb-0">
+          Created by: <span className="font-semibold">{author.name}</span>
+        </div>
+        <div className="flex-shrink-0">
           <Link href={`/dashboard/spoken-rules/update/${id}`}>
-            <button className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mt-4">
-              Update Data
+            <button className="flex items-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">
+              <FaEdit className="mr-2" /> {/* Icon for update */}
             </button>
           </Link>
         </div>
         <div className="text-sm text-gray-600">
           Created At:{" "}
-          {new Date(createdAt).toLocaleDateString(undefined, {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          })}
+          <span className="font-semibold">
+            {new Date(createdAt).toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+            })}
+          </span>
         </div>
       </div>
+
       <div ref={cardRef}>
         <div className="mb-4">
-          <div className="relative flex w-full items-center justify-center rounded-lg mx-auto bg-gradient-to-r from-purple-500 to-indigo-500">
-            <div className="flex flex-col items-center text-center md:px-4 px-2 py-4 bg-white w-11/12 rounded-lg font-bold text-purple-800">
-              <div className="text-lg">{structure}</div>
+          <div className="relative flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-indigo-500">
+            <div className="flex flex-col items-center text-center p-4 bg-white rounded-lg font-bold text-purple-800 w-full">
+              <h2 className="text-lg">{structure}</h2>
             </div>
           </div>
         </div>
-        <ul className="space-y-6">
+
+        <ul className="space-y-4">
           {examples?.map((example: Example, idx: string) => (
             <li
               key={idx}
@@ -105,28 +111,31 @@ const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
             >
               <p className="text-gray-800 mb-1">
                 <strong className="text-gray-900">English:</strong>{" "}
-                {example.english}
+                <span className="text-gray-700">{example.english}</span>
               </p>
               <p className="text-gray-800">
                 <strong className="text-gray-900">Bangla:</strong>{" "}
-                {example.bangla}
+                <span className="text-gray-700">{example.bangla}</span>
               </p>
             </li>
           ))}
         </ul>
+
         {note && (
-          <div className="mt-4  bg-gradient-to-r from-yellow-100 to-yellow-200 p-4 rounded-lg border border-yellow-300 shadow-inner flex items-center space-x-2">
+          <div className="mt-4 bg-gradient-to-r from-yellow-100 to-yellow-200 p-4 rounded-lg border border-yellow-300 shadow-inner flex items-center space-x-2">
             <MdNote className="text-yellow-600" size={24} />
             <div className="text-sm text-gray-800">
-              <strong className="text-yellow-700">Note:</strong> {note}
+              <strong className="text-yellow-700">Note:</strong>{" "}
+              <span>{note}</span>
             </div>
           </div>
         )}
       </div>
-      <div className="flex justify-center mt-6">
+
+      {/* <div className="flex flex-col md:flex-row justify-center mt-6 space-y-2 md:space-y-0 md:space-x-2">
         <button
           onClick={handleCopy}
-          className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:bg-gradient-to-l hover:from-blue-600 hover:to-purple-600 transition-colors duration-300 shadow-md flex items-center mr-2"
+          className="flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:bg-gradient-to-l hover:from-blue-600 hover:to-purple-600 transition-colors duration-300 shadow-md"
         >
           {copySuccess ? (
             <>
@@ -141,13 +150,11 @@ const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
         <button
           disabled={isLoading}
           onClick={toggleFavorite}
-          className={`px-4 py-2 ${
+          className={`flex items-center justify-center px-4 py-2 text-white rounded-lg transition-colors duration-300 shadow-md ${
             isFavorite
               ? "bg-red-500 hover:bg-red-600"
               : "bg-yellow-500 hover:bg-yellow-600"
-          } text-white rounded-lg transition-colors duration-300 shadow-md flex items-center ${
-            isLoading ? "disabled:bg-opacity-50" : ""
-          }`}
+          } ${isLoading ? "disabled:bg-opacity-50" : ""}`}
         >
           {isFavorite ? (
             <>
@@ -159,7 +166,7 @@ const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
             </>
           )}
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
