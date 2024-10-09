@@ -1,7 +1,6 @@
 const rule = {
   category: "Affection",
-  description:
-    "Using 'Subject + will love to be + noun/adjective' to express a future fondness for being something.",
+  note: "Using 'Subject + will love to be + noun/adjective' to express a future fondness for being something.",
   structure: "╰┈➤☆Sub + will love to be + noun/adjective",
   usage:
     "This structure indicates a strong liking for being a certain way or having a certain quality in the future.",
