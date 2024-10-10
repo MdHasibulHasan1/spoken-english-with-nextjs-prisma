@@ -20,6 +20,7 @@ export async function GET(req: NextRequest) {
           { note: { contains: search, mode: "insensitive" } },
           { status: { contains: search, mode: "insensitive" } },
           { structure: { contains: search, mode: "insensitive" } },
+          { serialNumber: parseInt(search) || undefined },
         ],
       },
     });
@@ -30,7 +31,7 @@ export async function GET(req: NextRequest) {
           { category: { contains: search, mode: "insensitive" } },
           { note: { contains: search, mode: "insensitive" } },
           { status: { contains: search, mode: "insensitive" } },
-          { structure: { contains: search, mode: "insensitive" } },
+          { serialNumber: parseInt(search) || undefined },
         ],
       },
       skip,

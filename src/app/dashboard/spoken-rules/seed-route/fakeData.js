@@ -1,90 +1,41 @@
 const rule = {
-  category: "Affection",
-  note: "Using 'Subject + will love to be + noun/adjective' to express a future fondness for being something.",
-  structure: "╰┈➤☆Sub + will love to be + noun/adjective",
-  usage:
-    "This structure indicates a strong liking for being a certain way or having a certain quality in the future.",
-  explanation_in_bangla:
-    "'Subject + will love to be + noun/adjective' ব্যবহার করা হয় যখন কেউ ভবিষ্যতে কোন কিছুর জন্য হওয়ার জন্য প্রবল ভালোবাসার কথা বলে।",
+  category: "Expressing Quantity",
+  description:
+    "Using 'Millions of' followed by a plural noun and verb (লক্ষ লক্ষ).",
+  structure: "Millions of + noun (plural) + verb (plural) ⇒ লক্ষ লক্ষ",
+  note: "",
   examples: [
-    // Affirmative examples
     {
-      english: "I will love to be a teacher.",
-      bangla: "আমি শিক্ষক হতে ভালোবাসব।",
+      english: "Millions of people use the internet every day.",
+      bangla: "প্রতিদিন লক্ষ লক্ষ মানুষ ইন্টারনেট ব্যবহার করে।",
     },
     {
-      english: "She will love to be independent.",
-      bangla: "সে স্বাধীন হতে ভালোবাসবে।",
+      english: "Millions of stars exist in our galaxy.",
+      bangla: "আমাদের ছায়াপথে লক্ষ লক্ষ তারা আছে।",
     },
     {
-      english: "They will love to be leaders.",
-      bangla: "তারা নেতা হতে ভালোবাসবে।",
+      english: "Millions of dollars were donated to charity.",
+      bangla: "চ্যারিটিতে লক্ষ লক্ষ ডলার দান করা হয়েছিল।",
     },
     {
-      english: "He will love to be a doctor.",
-      bangla: "সে ডাক্তার হতে ভালোবাসবে।",
+      english: "Millions of viewers watched the live broadcast.",
+      bangla: "লক্ষ লক্ষ দর্শক সরাসরি সম্প্রচার দেখেছিল।",
     },
     {
-      english: "We will love to be part of the team.",
-      bangla: "আমরা দলের অংশ হতে ভালোবাসব।",
-    },
-
-    // Negative examples
-    {
-      english: "I won't love to be famous.",
-      bangla: "আমি বিখ্যাত হতে ভালোবাসব না।",
+      english: "Millions of children around the world need education.",
+      bangla: "বিশ্বজুড়ে লক্ষ লক্ষ শিশুদের শিক্ষার প্রয়োজন।",
     },
     {
-      english: "She won't love to be the center of attention.",
-      bangla: "সে মনোযোগের কেন্দ্রবিন্দু হতে ভালোবাসবে না।",
+      english: "Millions of insects live in the rainforest.",
+      bangla: "বৃষ্টিপাতের বনাঞ্চলে লক্ষ লক্ষ পোকামাকড় বাস করে।",
     },
     {
-      english: "He won't love to be a follower.",
-      bangla: "সে অনুসারী হতে ভালোবাসবে না।",
+      english: "Millions of people are affected by climate change.",
+      bangla: "লক্ষ লক্ষ মানুষ জলবায়ু পরিবর্তনে প্রভাবিত হচ্ছে।",
     },
     {
-      english: "They won't love to be strict.",
-      bangla: "তারা কঠোর হতে ভালোবাসবে না।",
-    },
-
-    // Interrogative examples
-    {
-      english: "Will you love to be a leader?",
-      bangla: "তুমি কি নেতা হতে ভালোবাসবে?",
-    },
-    {
-      english: "Will she love to be successful?",
-      bangla: "সে কি সফল হতে ভালোবাসবে?",
-    },
-    {
-      english: "Will they love to be part of the project?",
-      bangla: "তারা কি প্রকল্পের অংশ হতে ভালোবাসবে?",
-    },
-    {
-      english: "Will we love to be responsible for the event?",
-      bangla: "আমরা কি অনুষ্ঠানের দায়িত্ব নিতে ভালোবাসব?",
-    },
-    {
-      english: "Will he love to be a writer?",
-      bangla: "সে কি লেখক হতে ভালোবাসবে?",
-    },
-
-    // Negative interrogative examples
-    {
-      english: "Won't you love to be the best in the class?",
-      bangla: "তুমি কি শ্রেণিতে সেরা হতে ভালোবাসবে না?",
-    },
-    {
-      english: "Won't she love to be a good friend?",
-      bangla: "সে কি ভালো বন্ধু হতে ভালোবাসবে না?",
-    },
-    {
-      english: "Won't they love to be honest?",
-      bangla: "তারা কি সৎ হতে ভালোবাসবে না?",
-    },
-    {
-      english: "Won't he love to be a part of the community?",
-      bangla: "সে কি সমাজের অংশ হতে ভালোবাসবে না?",
+      english: "Millions of books are published every year.",
+      bangla: "প্রতি বছর লক্ষ লক্ষ বই প্রকাশিত হয়।",
     },
   ],
 };

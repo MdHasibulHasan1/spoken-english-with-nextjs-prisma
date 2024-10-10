@@ -23,8 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        {/* <body className={inter.className}> */}
-        <body>
+        <body className={ubuntu.className}>
           {children}
           <Toaster />
         </body>

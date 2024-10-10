@@ -84,7 +84,7 @@ const AddRuleForm: React.FC = () => {
         toast.success(data.message); // Success toast
         toast.dismiss(toastId); // Dismiss loading toast
         setIsLoading(false);
-        router.push("/"); // Redirect after success (if needed)
+        // router.push("/"); // Redirect after success (if needed)
       } else {
         toast.error(data.message); // Error toast
         toast.dismiss(toastId); // Dismiss loading toast

@@ -33,7 +33,7 @@ const Navbar = () => {
     );
   }
   return (
-    <nav className="px-4 mx-auto font-semibold  sticky top-0 z-10 w-full uppercase text-lg py-6 bg-blue-200">
+    <nav className="px-4 mx-auto font-semibold  sticky top-0 z-10 w-full uppercase text-lg py-6 bg-gray-50">
       <div className="">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-2xl normal-case">
