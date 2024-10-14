@@ -3,6 +3,7 @@ const rule = {
   description:
     "Used to ask about multiple choices or preferences among several options.",
   structure: "Which ones + [Auxiliary Verb] + [Subject] + [Main Verb]?",
+  note: "",
   examples: [
     {
       english: "Which ones do you like?",
