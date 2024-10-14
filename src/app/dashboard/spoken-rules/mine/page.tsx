@@ -22,6 +22,7 @@ async function MySpokenRules() {
 
   // Step 2: Fetch the spoken rules for the user
   const rules = await prisma.spokenRule.findMany({
+    // where: { userId: user.id, category: "preposition" },
     where: { userId: user.id },
     include: {
       author: true, // Including the related author (user) details, if needed

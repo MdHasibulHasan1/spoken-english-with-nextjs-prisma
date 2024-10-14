@@ -8,8 +8,18 @@ import { prisma } from "@/lib/db/prisma";
 
 export async function GET(req: Request) {
   try {
-    const rules = await prisma.spokenRule.findMany();
-    return NextResponse.json(rules);
+    const rules = await prisma.spokenRule.findMany({
+      select: {
+        id: true,
+        examples: true,
+        category: true,
+        note: true,
+        structure: true,
+        // Add other fields you want to include
+        // Do not include 'user' field here
+      },
+    });
+    return NextResponse.json({});
   } catch (error: any) {
     console.error("ERROR GETTING SPOKEN RULES: ", error);
     return NextResponse.json(

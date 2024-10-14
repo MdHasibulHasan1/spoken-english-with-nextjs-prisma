@@ -21,6 +21,9 @@ export default async function SpokenRules({
   const totalPages = Math.ceil((totalItemCount - heroItemCount) / limit);
 
   const spokenRules = await prisma.spokenRule.findMany({
+    where: {
+      // category: "preposition", // Filter based on the category
+    },
     orderBy: { id: "desc" },
     skip: (currentPage - 1) * limit + (currentPage === 1 ? 0 : heroItemCount),
     take: limit + (currentPage === 1 ? heroItemCount : 0),

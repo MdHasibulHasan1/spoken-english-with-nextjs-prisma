@@ -104,7 +104,11 @@ const AddRuleForm: React.FC = () => {
         >
           <option value="all">All</option>
           <option value="question">Question</option>
+          <option value="all rules">All Rules</option>
           <option value="modal verb">Modal verb</option>
+          <option value="degree">Degree</option>
+          <option value="be verb">Be verb</option>
+          <option value="have verb">Have verb</option>
           <option value="use of wh words">Use of wh words</option>
           <option value="preposition">Preposition</option>
           <option value="introductory there">Introductory There</option>

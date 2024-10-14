@@ -67,7 +67,7 @@ const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
   };
 
   return (
-    <div className="mb-8 p-2 w-full max-w-md mx-auto bg-white rounded-xl shadow-lg transition-shadow duration-300 border border-gray-200">
+    <div className="mb-8  font-bold p-2 w-full max-w-md mx-auto bg-white rounded-xl shadow-lg transition-shadow duration-300 border border-gray-200">
       <div className="flex flex-col items-center md:flex-row justify-between mb-4">
         <div className="text-sm text-gray-600 mb-2 md:mb-0">
           Created by: <span className="font-semibold">{author.name}</span>

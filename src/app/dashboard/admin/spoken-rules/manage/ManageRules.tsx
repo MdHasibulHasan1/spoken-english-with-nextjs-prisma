@@ -1,10 +1,10 @@
 "use client";
 import Loader from "@/components/Loader";
 import SectionTitle from "@/components/SectionTitle";
-// import { Rule } from "@/types/types";
 import Link from "next/link";
-import React, { useState, useEffect, useCallback } from "react"; // Import useCallback
+import React, { useState, useEffect, useCallback } from "react";
 import toast from "react-hot-toast";
+
 interface Rule {
   id: string;
   category: string;
@@ -16,7 +16,6 @@ interface Rule {
 
 const ManageRules: React.FC = () => {
   const [rules, setRules] = useState<Rule[]>([]);
-
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -27,6 +26,7 @@ const ManageRules: React.FC = () => {
   const [sortField, setSortField] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState("desc");
 
+  // Fetching the rules based on search input and pagination
   const fetchRules = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -34,7 +34,13 @@ const ManageRules: React.FC = () => {
       const response = await fetch(
         `/api/admin/spoken-rules?search=${search}&page=${page}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}`
       );
+
+      // Log the request URL for debugging
+      console.log("API URL: ", response.url);
+
       const data = await response.json();
+      console.log("Fetched rules data: ", data); // Logging response for debugging
+
       if (data.success) {
         setRules(data.data);
         setTotalPages(data.totalPages);
@@ -43,20 +49,23 @@ const ManageRules: React.FC = () => {
         setError(data.message || "Failed to fetch rules.");
       }
     } catch (error) {
+      console.error("Fetch error: ", error);
       setError("An error occurred while fetching the rules.");
     } finally {
       setLoading(false);
     }
-  }, [search, page, limit, sortField, sortOrder]); // Add dependencies
+  }, [search, page, limit, sortField, sortOrder]);
 
+  // Trigger the API call after the user finishes typing (debouncing)
   useEffect(() => {
     const debounceFetch = setTimeout(() => {
       fetchRules();
-    }, 500); // Debounce time in milliseconds
+    }, 500);
 
     return () => clearTimeout(debounceFetch);
-  }, [fetchRules]); // Only depend on fetchRules
+  }, [fetchRules]);
 
+  // Update rule status
   const updateStatus = async (id: string, status: string) => {
     const toastId = toast.loading("Loading...");
     try {
@@ -72,31 +81,33 @@ const ManageRules: React.FC = () => {
 
       if (data.success) {
         toast.success(data.message);
-        setRules(
-          rules.map((rule: Rule) =>
-            rule.id === id ? { ...rule, status } : rule
-          )
+        setRules((prevRules) =>
+          prevRules.map((rule) => (rule.id === id ? { ...rule, status } : rule))
         );
       } else {
         toast.error(data.message || "An error occurred.");
       }
     } catch (error) {
+      console.error("Update status error: ", error);
       toast.error("Failed to update status.");
     } finally {
       toast.dismiss(toastId);
     }
   };
 
+  // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    setPage(1);
+    setPage(1); // Reset to the first page when a new search starts
   };
 
+  // Handle items per page limit change
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLimit(parseInt(e.target.value, 10));
     setPage(1);
   };
 
+  // Handle sorting change
   const handleSortChange = (field: string) => {
     const order = sortField === field && sortOrder === "asc" ? "desc" : "asc";
     setSortField(field);
@@ -104,7 +115,7 @@ const ManageRules: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 p-4">
       <SectionTitle title="Manage Rules" />
       <div className="flex flex-col md:flex-row justify-between items-center mb-6">
         <input
@@ -124,6 +135,7 @@ const ManageRules: React.FC = () => {
           <option value="20">20</option>
         </select>
       </div>
+
       {loading ? (
         <Loader />
       ) : error ? (
@@ -139,6 +151,8 @@ const ManageRules: React.FC = () => {
               </div>
             )}
           </div>
+
+          {/* Table rendering */}
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
@@ -186,6 +200,7 @@ const ManageRules: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
+                {/* {rules.length > 0 ? ( */}
                 {rules.map((rule: Rule) => (
                   <tr key={rule.id} className="hover:bg-gray-100">
                     <td className="border p-2">{rule.id}</td>
@@ -219,25 +234,24 @@ const ManageRules: React.FC = () => {
                 ))}
               </tbody>
             </table>
-            <div className="flex justify-between items-center mt-4">
-              <button
-                onClick={() => setPage(page - 1)}
-                disabled={page === 1 || loading}
-                className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
-              >
-                Previous
-              </button>
-              <span>
-                Page {page} of {totalPages}
-              </span>
-              <button
-                onClick={() => setPage(page + 1)}
-                disabled={page === totalPages || loading}
-                className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
+          </div>
+
+          {/* Pagination */}
+          <div className="flex justify-between mt-4">
+            <button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1 || loading}
+              className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <button
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages || loading}
+              className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+            >
+              Next
+            </button>
           </div>
         </>
       )}

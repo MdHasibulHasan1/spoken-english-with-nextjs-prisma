@@ -125,7 +125,11 @@ const RuleEditForm: React.FC<RuleEditFormProps> = ({ rule }) => {
         >
           <option value="all">All</option>
           <option value="question">Question</option>
+          <option value="all rules">All Rules</option>
           <option value="modal verb">Modal verb</option>
+          <option value="degree">Degree</option>
+          <option value="be verb">Be verb</option>
+          <option value="have verb">Have verb</option>
           <option value="use of wh words">Use of wh words</option>
           <option value="preposition">Preposition</option>
           <option value="introductory there">Introductory There</option>
@@ -173,7 +177,7 @@ const RuleEditForm: React.FC<RuleEditFormProps> = ({ rule }) => {
         {formData?.examples?.map((example, index) => (
           <div
             key={index}
-            className="flex gap-2 items-center mb-2 bg-gray-100 p-2 rounded"
+            className="flex flex-col md:flex-row gap-2 items-center mb-2 bg-gray-100 p-2 rounded"
           >
             <input
               type="text"
@@ -181,7 +185,7 @@ const RuleEditForm: React.FC<RuleEditFormProps> = ({ rule }) => {
               placeholder="English"
               value={example.english}
               onChange={(e) => handleExampleChange(index, e)}
-              className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full md:w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
             <input
               type="text"
@@ -189,7 +193,7 @@ const RuleEditForm: React.FC<RuleEditFormProps> = ({ rule }) => {
               placeholder="Bangla"
               value={example.bangla}
               onChange={(e) => handleExampleChange(index, e)}
-              className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full md:w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
             <button
               type="button"

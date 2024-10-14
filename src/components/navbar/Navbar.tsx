@@ -57,7 +57,7 @@ const Navbar = () => {
             ))}
           </ul>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-end gap-4">
             {user && (
               <div className="relative">
                 <Image
@@ -108,9 +108,9 @@ const Navbar = () => {
           </button>
         </div>
 
-        <div className="lg:hidden rounded-3xl">
+        <div className="lg:hidden ">
           {isMenuOpen && (
-            <div className="absolute top-0 bg-gray-100 border border-gray-500 w-full left-0  rounded-badge">
+            <div className="absolute top-0 bg-gray-100 border w-full left-0  rounded-b-3xl">
               <div className="p-5 bg-primary-500 border rounded shadow-sm">
                 <div className="flex items-center justify-between mb-4 relative">
                   <button
