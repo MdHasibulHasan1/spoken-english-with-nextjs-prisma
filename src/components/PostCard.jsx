@@ -7,12 +7,13 @@ export default function PostCard({
   title,
   content,
   image,
+  id,
   createdAt,
   updatedAt,
 }) {
   return (
     <div className="group relative w-full border border-teal-500 hover:border-2 h-[400px] overflow-hidden rounded-lg sm:w-[430px] transition-all">
-      <Link href={`/chapter/${slug}`}>
+      <Link href={`/chapter/${id}`}>
         {/* <img
           src={image}
           alt="post cover"

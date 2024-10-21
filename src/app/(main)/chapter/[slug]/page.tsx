@@ -10,7 +10,7 @@ async function Chapter({ params }: { params: Params }) {
 
   try {
     const chapter = await prisma.chapter.findUnique({
-      where: { slug: chapterSlug },
+      where: { id: chapterSlug },
     });
 
     if (!chapter) {
