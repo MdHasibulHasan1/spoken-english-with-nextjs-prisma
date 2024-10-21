@@ -1,57 +1,56 @@
 const rule = {
-  category: "Asking about Multiple Choices or Preferences",
+  category: "Next to me there is/are + noun",
   description:
-    "Used to ask about multiple choices or preferences among several options.",
-  structure: "Which ones + [Auxiliary Verb] + [Subject] + [Main Verb]?",
-  note: "",
+    "Used to describe the presence of something or someone next to the speaker.",
+  structure: "Next to me there is/are + noun...",
   examples: [
     {
-      english: "Which ones do you like?",
-      bangla: "তুমি কোনগুলো পছন্দ করো?",
+      english: "Next to me there is a chair.",
+      bangla: "আমার পাশে একটি চেয়ার আছে।",
     },
     {
-      english: "Which ones did they choose?",
-      bangla: "তারা কোনগুলো বেছে নিয়েছে?",
+      english: "Next to me there is a tree.",
+      bangla: "আমার পাশে একটি গাছ আছে।",
     },
     {
-      english: "Which ones are you taking?",
-      bangla: "তুমি কোনগুলো নিচ্ছো?",
+      english: "Next to me there is a table.",
+      bangla: "আমার পাশে একটি টেবিল আছে।",
     },
     {
-      english: "Which ones have you bought?",
-      bangla: "তুমি কোনগুলো কিনেছো?",
+      english: "Next to me there is a book.",
+      bangla: "আমার পাশে একটি বই আছে।",
     },
     {
-      english: "Which ones will you buy?",
-      bangla: "তুমি কোনগুলো কিনবে?",
+      english: "Next to me there is a dog lying down.",
+      bangla: "আমার পাশে একটি কুকুর শুয়ে আছে।",
     },
     {
-      english: "Which ones have you seen?",
-      bangla: "তুমি কোনগুলো দেখেছো?",
+      english: "Next to me there is a cat sleeping.",
+      bangla: "আমার পাশে একটি বিড়াল ঘুমাচ্ছে।",
     },
     {
-      english: "Which ones are missing?",
-      bangla: "কোনগুলো নেই?",
+      english: "Next to me there is a window.",
+      bangla: "আমার পাশে একটি জানালা আছে।",
     },
     {
-      english: "Which ones are left?",
-      bangla: "কোনগুলো বাকি আছে?",
+      english: "Next to me there is a bag.",
+      bangla: "আমার পাশে একটি ব্যাগ আছে।",
     },
     {
-      english: "Which ones did you forget?",
-      bangla: "তুমি কোনগুলো ভুলে গেছো?",
+      english: "Next to me there is a computer.",
+      bangla: "আমার পাশে একটি কম্পিউটার আছে।",
     },
     {
-      english: "Which ones are you keeping?",
-      bangla: "তুমি কোনগুলো রাখছো?",
+      english: "Next to me there are many flowers.",
+      bangla: "আমার পাশে অনেক ফুল আছে।",
     },
     {
-      english: "Which ones are not working?",
-      bangla: "কোনগুলো কাজ করছে না?",
+      english: "Next to me there are four chairs.",
+      bangla: "আমার পাশে চারটি চেয়ার আছে।",
     },
     {
-      english: "Which ones will you give me?",
-      bangla: "তুমি কোনগুলো আমাকে দেবে?",
+      english: "Next to me there are three people talking.",
+      bangla: "আমার পাশে তিনজন কথা বলছে।",
     },
   ],
 };

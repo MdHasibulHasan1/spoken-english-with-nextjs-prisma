@@ -9,17 +9,28 @@ import { prisma } from "@/lib/db/prisma";
 export async function GET(req: Request) {
   try {
     const rules = await prisma.spokenRule.findMany({
+      where: {
+        // category: "phrase",
+        status: { not: "denied" }, // Add this condition to exclude 'denied' status
+      },
+      orderBy: {
+        serialNumber: "asc",
+      },
       select: {
         id: true,
         examples: true,
         category: true,
         note: true,
         structure: true,
+        explanation: true,
+        serialNumber: true,
+
         // Add other fields you want to include
         // Do not include 'user' field here
       },
     });
-    return NextResponse.json({});
+
+    return NextResponse.json(rules);
   } catch (error: any) {
     console.error("ERROR GETTING SPOKEN RULES: ", error);
     return NextResponse.json(
@@ -30,8 +41,9 @@ export async function GET(req: Request) {
 }
 export async function POST(req: Request) {
   try {
-    const { category, structure, note, examples } = await req.json();
-    console.log(category, structure, note, examples);
+    const { category, structure, note, examples, explanation } =
+      await req.json();
+    // console.log(category, structure, note, explanation, examples);
     const session = await getServerSession(authOptions);
     const _user: User = session?.user;
 
@@ -61,6 +73,7 @@ export async function POST(req: Request) {
     const createdRule = await prisma.spokenRule.create({
       data: {
         structure,
+        explanation,
         note,
         examples: filteredExamples,
         category,

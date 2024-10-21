@@ -16,6 +16,7 @@ const AddRuleForm: React.FC = () => {
   const [formData, setFormData] = useState<Rule>({
     structure: "",
     note: "",
+    explanation: "",
     examples: [{ english: "", bangla: "" }],
     category: "all",
     userId: user?.id || "",
@@ -103,6 +104,9 @@ const AddRuleForm: React.FC = () => {
           className="form-select mt-1 block w-full rounded-md border border-gray-800 p-2"
         >
           <option value="all">All</option>
+          <option value="as+adjective+as">as+adjective+as</option>
+          <option value="as+adjective+as">as+adjective+as</option>
+          <option value="start with phrase"> Start with Phrase </option>
           <option value="question">Question</option>
           <option value="all rules">All Rules</option>
           <option value="modal verb">Modal verb</option>
@@ -135,7 +139,21 @@ const AddRuleForm: React.FC = () => {
           className="block w-full px-3 py-2 border rounded-md focus:outline-none border-gray-300"
         />
       </div>
-
+      <div className="mb-4">
+        <label
+          htmlFor="explanation"
+          className="block mb-2 font-medium text-gray-700"
+        >
+          Explanation
+        </label>
+        <textarea
+          id="explanation"
+          name="explanation"
+          value={formData?.explanation ?? ""}
+          onChange={handleInputChange}
+          className="block w-full px-3 py-2 border rounded-md focus:outline-none border-gray-300"
+        />
+      </div>
       <div className="mb-4">
         <label htmlFor="note" className="block mb-2 font-medium text-gray-700">
           Note
@@ -143,7 +161,7 @@ const AddRuleForm: React.FC = () => {
         <textarea
           id="note"
           name="note"
-          value={formData.note}
+          value={formData.note ?? ""}
           onChange={handleInputChange}
           className="block w-full px-3 py-2 border rounded-md focus:outline-none border-gray-300"
         />

@@ -36,7 +36,8 @@ type Examples {
 
 model Chapter {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  slug  String @unique
+  slug  String 
+  // slug  String @unique
   category  String
   content   String
   image     String
@@ -72,7 +73,8 @@ model Blog {
 model SpokenRule {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   category      String
-  note   String
+  note   String?
+  explanation String?
   serialNumber  Int?      @default(0)
   examples      Examples[]
   favorites     String[]

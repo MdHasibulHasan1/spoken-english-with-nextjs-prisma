@@ -36,7 +36,8 @@ export async function PATCH(
 ) {
   const body = await request.json();
   const { id } = params;
-  const { examples, structure, category, serialNumber, note } = body;
+  const { examples, structure, category, serialNumber, note, explanation } =
+    body;
 
   try {
     // Validation: Check if any of the required fields are missing
@@ -56,6 +57,7 @@ export async function PATCH(
         examples,
         structure,
         category,
+        explanation,
         note,
         serialNumber: parseInt(serialNumber, 10),
         updatedAt: new Date(),

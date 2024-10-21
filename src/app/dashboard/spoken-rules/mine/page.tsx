@@ -22,13 +22,14 @@ async function MySpokenRules() {
 
   // Step 2: Fetch the spoken rules for the user
   const rules = await prisma.spokenRule.findMany({
-    // where: { userId: user.id, category: "preposition" },
+    // where: { userId: user.id, category: "modal verb" },
     where: { userId: user.id },
     include: {
       author: true, // Including the related author (user) details, if needed
     },
     orderBy: {
       createdAt: "desc", // Use 'desc' if you want to sort in descending order
+      // serialNumber: "asc",
     },
   });
   // console.log(rules);
