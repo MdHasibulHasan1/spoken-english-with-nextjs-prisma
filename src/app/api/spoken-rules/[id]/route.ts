@@ -57,7 +57,6 @@ export async function PATCH(
         examples,
         structure,
         category,
-        explanation,
         note,
         serialNumber: parseInt(serialNumber, 10),
         updatedAt: new Date(),
