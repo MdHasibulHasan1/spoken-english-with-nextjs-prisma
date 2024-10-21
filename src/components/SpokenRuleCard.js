@@ -7,7 +7,7 @@ import { FaRegCopy, FaCheck, FaStar, FaRegStar } from "react-icons/fa";
 import { MdNote } from "react-icons/md";
 import { FaEdit } from "react-icons/fa"; // Make sure to import the icon you want to use
 
-const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
+const SpokenRuleCard = ({ rule }) => {
   const {
     structure,
     note,
@@ -20,7 +20,7 @@ const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
     userId,
     favorites,
   } = rule;
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef < HTMLDivElement > null;
   const [copySuccess, setCopySuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isFavorite, setIsFavorite] = useState(favorites.includes(userId));
@@ -105,7 +105,7 @@ const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
           </div>
 
           <ul className="mt-4 space-y-2">
-            {examples?.map((example: Example, idx: number) => (
+            {examples?.map((example, idx) => (
               <li
                 key={idx}
                 className="border-b border-gray-300 pb-2 last:border-b-0 transform transition-transform hover:scale-105"
