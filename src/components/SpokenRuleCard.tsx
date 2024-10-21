@@ -13,6 +13,7 @@ const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
     structure,
     note,
     examples,
+    explanation,
     category,
     createdAt,
     id,
@@ -100,6 +101,9 @@ const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
             <div className="bg-white rounded-lg p-2 w-full">
               <h2 className="text-purple-700 text-center text-lg font-bold">
                 {structure}
+              </h2>
+              <h2 className="text-purple-700 text-center text-lg font-bold">
+                {explanation}
               </h2>
             </div>
           </div>
