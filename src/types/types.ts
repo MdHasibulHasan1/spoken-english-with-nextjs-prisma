@@ -19,7 +19,7 @@ export interface Example {
 export interface Rule {
   serialNumber?: number | null;
   structure: string;
-  note?: string; // If this can be empty, keep it as string
+  note?: string | undefined; // If this can be empty, keep it as string
   examples: Example[];
   category: string;
   createdAt?: Date;
