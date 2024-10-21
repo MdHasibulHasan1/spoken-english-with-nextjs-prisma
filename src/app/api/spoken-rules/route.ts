@@ -22,7 +22,7 @@ export async function GET(req: Request) {
         category: true,
         note: true,
         structure: true,
-        explanation: true,
+        // explanation: true,
         serialNumber: true,
 
         // Add other fields you want to include
