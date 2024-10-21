@@ -27,5 +27,5 @@ export interface Rule {
   status?: string;
   userId: string; // Make this required
   id?: string;
-  explanation: string | null;
+  explanation?: string | null;
 }

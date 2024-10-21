@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 import { FaRegCopy, FaCheck, FaStar, FaRegStar } from "react-icons/fa";
 import { MdNote } from "react-icons/md";
 import { FaEdit } from "react-icons/fa"; // Make sure to import the icon you want to use
-interface SpokenRuleCardProps extends Rule {}
 
 const SpokenRuleCard: React.FC<{ rule: Rule }> = ({ rule }: any) => {
   const {
