@@ -30,7 +30,7 @@ export async function GET(req: Request) {
       },
     });
 
-    return NextResponse.json(rules);
+    return NextResponse.json({});
   } catch (error: any) {
     console.error("ERROR GETTING SPOKEN RULES: ", error);
     return NextResponse.json(

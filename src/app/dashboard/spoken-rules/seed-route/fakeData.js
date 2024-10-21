@@ -53,6 +53,8 @@ const rule = {
       bangla: "আমার পাশে তিনজন কথা বলছে।",
     },
   ],
+  explanation: ":",
+  note: "",
 };
 
 export default rule;
