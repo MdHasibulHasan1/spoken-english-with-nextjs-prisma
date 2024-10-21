@@ -12,14 +12,14 @@ import { User } from "next-auth";
 const AddRuleForm: React.FC = () => {
   const { data: session } = useSession();
   const user: User = session?.user;
-
+  console.log(user);
   const [formData, setFormData] = useState<Rule>({
     structure: "",
     note: "",
     explanation: "",
     examples: [{ english: "", bangla: "" }],
     category: "all",
-    userId: user?.id || "",
+    userId: user?.id || "66fe674d26a69330c3082cc9",
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -72,6 +72,7 @@ const AddRuleForm: React.FC = () => {
     setIsLoading(true);
     try {
       const rule = await addRule(formData);
+      console.log(rule);
       if (rule?.success) {
         toast.success(rule?.message || "Operation successful!");
         toast.dismiss(toastId);
