@@ -73,7 +73,7 @@ export async function POST(req: Request) {
     const createdRule = await prisma.spokenRule.create({
       data: {
         structure,
-        explanation,
+        // explanation,
         note,
         examples: filteredExamples,
         category,
